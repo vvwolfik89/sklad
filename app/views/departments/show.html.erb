@@ -1,0 +1,16 @@
+<div>
+  <div>
+    <div>
+      <h1><%= @department.title %></h1>
+      <p><%= @department.body %></p>
+    </div>
+  </div>
+  <div>
+    <%= link_to 'View all dots', departments_path %>
+    <%= link_to 'Edit', edit_department_path(@department)%>
+    <%= link_to "Destroy", department_path(@department), data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure?"
+    } %>
+  </div>
+</div>
