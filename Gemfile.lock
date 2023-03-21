@@ -113,7 +113,6 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.1)
     minitest (5.18.0)
     msgpack (1.6.1)
     mysql2 (0.5.5)
@@ -127,8 +126,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.14.2)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     public_suffix (5.0.1)
     puma (5.6.5)
@@ -151,6 +149,10 @@ GEM
       activesupport (= 7.0.4.3)
       bundler (>= 1.15.0)
       railties (= 7.0.4.3)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -209,7 +211,7 @@ GEM
     zeitwerk (2.6.7)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
@@ -220,6 +222,7 @@ DEPENDENCIES
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  rails-controller-testing
   redis (~> 4.0)
   selenium-webdriver
   sprockets-rails
@@ -230,7 +233,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 2.7.0p0
+   ruby 3.1.3p185
 
 BUNDLED WITH
-   2.1.2
+   2.4.9
