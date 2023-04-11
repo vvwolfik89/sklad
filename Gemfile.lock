@@ -77,6 +77,8 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.6, < 3)
       sassc-rails (>= 2.0.0)
+    bootstrap3-datetimepicker-rails (4.17.47)
+      momentjs-rails (>= 2.8.1)
     builder (3.2.4)
     capybara (3.38.0)
       addressable
@@ -89,6 +91,8 @@ GEM
       xpath (~> 3.2)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    cssbundling-rails (1.1.2)
+      railties (>= 6.0.0)
     date (3.3.3)
     debug (1.7.1)
       irb (>= 1.5.0)
@@ -122,6 +126,8 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.18.0)
+    momentjs-rails (2.29.4.1)
+      railties (>= 3.1)
     msgpack (1.6.1)
     mysql2 (0.5.5)
     net-imap (0.3.4)
@@ -234,10 +240,13 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   bootstrap (>= 5.2.3)
+  bootstrap3-datetimepicker-rails
   capybara
+  cssbundling-rails (~> 1.1)
   debug
   importmap-rails
   jbuilder
+  momentjs-rails
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
