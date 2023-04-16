@@ -1,0 +1,16 @@
+<div>
+  <div>
+    <div>
+      <h1><%= @user.email %></h1>
+      <p><%= @user.role %></p>
+    </div>
+  </div>
+  <div>
+    <%= link_to 'View all users', users_path %>
+    <%= link_to 'Edit', edit_user_path(@user)%>
+    <%= link_to "Destroy", user_path(@user), data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure?"
+    } %>
+  </div>
+</div>

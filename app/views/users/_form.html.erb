@@ -1,0 +1,18 @@
+<h1>New User</h1>
+
+<%= form_with model: @user do |form| %>
+  <div>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :role %><br>
+    <%= form.text_area :role %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
