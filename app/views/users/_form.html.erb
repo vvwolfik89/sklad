@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-12">
+    <%= custom_form_for(@user, bootstrap3_form_options(html_class: "agent-form")) do |f| %>
+      <div class="bs-component">
+        <div class="tab-pane" id="users">
+          <div class="row">
+            <%#= f.association :roles, collection: available_roles %>
+
+            <%# if can? :set_active, @agent %>
+            <%#= f.input :is_active %>
+            <%# end %>
+
+            <%# if can?(:view_agent_tier, @agent) %>
+            <%= f.input :role, label: "Role", collection: User.roles.map { |type, _| [ type.titleize, type] }, include_blank: false  %>
+            <%# end %>
+            <%= f.input :first_name %>
+            <%= f.input :last_name %>
+            <%= f.input :patronymic %>
+            <div class='field p-3'>
+              <%= f.label :bday -%>
+              <%= f.date_select :bday, start_year: 1950 -%>
+            </div>
+            <%= f.input :avatar %>
+          </div>
+          <div class="row">
+            <div class="col-sm-offset-3 col-sm-2 p-3">
+              <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
+              <%= link_to("Cancel", users_path, class: "btn btn-dark btn-block") %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    <% end %>
+  </div>
+</div>

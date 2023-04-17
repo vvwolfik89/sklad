@@ -55,6 +55,8 @@
 ## File-based project format:
 *.iws
 
+.idea/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -65,3 +67,5 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+/app/public/dashmin-1.0.0/
