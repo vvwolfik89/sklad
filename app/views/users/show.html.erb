@@ -9,7 +9,7 @@
         <div class="card-body">
           <h5 class="card-title"><%= @user.full_name %></h5>
           <p class="card-text"><%= @user.email %></p>
-          <p class="card-text"><%= @user.role.titleize %></p>
+          <p class="card-text"><%= I18n.t("activerecord.attributes.user.roles.#{@user.role}") %></p>
           <p class="card-text"><small class="text-muted"><%= @user.bday %></small></p>
           <div class="mb15">
             <%= link_to("Edit", edit_user_path(@user), class: "btn btn-primary btn-block pv10 fw600 mb10") %>

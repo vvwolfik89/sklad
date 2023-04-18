@@ -58,6 +58,7 @@
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.15.5, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v1.1.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.12.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="image_processing (v1.12.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="importmap-rails (v1.1.5, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="io-console (v0.6.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="irb (v1.6.3, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
@@ -67,6 +68,7 @@
     <orderEntry type="library" scope="PROVIDED" name="marcel (v1.0.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="matrix (v0.4.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="method_source (v1.0.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="mini_magick (v4.12.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.1.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.18.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="momentjs-rails (v2.29.4.1, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
@@ -96,10 +98,12 @@
     <orderEntry type="library" scope="PROVIDED" name="reline (v0.3.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="responders (v3.1.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rexml (v3.2.5, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby-vips (v2.1.4, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v2.3.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sassc (v2.4.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sassc-rails (v2.1.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v4.8.1, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="simple_form (v5.2.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v4.2.0, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets-rails (v3.4.2, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="stimulus-rails (v1.2.1, RVM: ruby-3.1.3 [sklad]) [gem]" level="application" />
