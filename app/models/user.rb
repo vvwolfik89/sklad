@@ -8,6 +8,9 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  has_and_belongs_to_many :departments
+
+  validate :one_department_is_selected
 
   def full_name
     "#{self.last_name} #{self.first_name} #{self.patronymic}"
@@ -22,4 +25,14 @@ class User < ApplicationRecord
       [I18n.t("activerecord.attributes.#{model_name.i18n_key}.roles.#{role}"), role]
     end
   end
+
+  private
+
+  def one_department_is_selected
+    unless (self.departments.size > 0)
+      errors.add(:departments, "You must select a department")
+    end
+  end
+
+
 end

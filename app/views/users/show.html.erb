@@ -8,6 +8,9 @@
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title"><%= @user.full_name %></h5>
+          <% @user.departments.each do |department| %>
+            <p><%= link_to(department.title, department_path(department), class: "col-sm-4") %></p>
+          <% end %>
           <p class="card-text"><%= @user.email %></p>
           <p class="card-text"><%= I18n.t("activerecord.attributes.user.roles.#{@user.role}") %></p>
           <p class="card-text"><small class="text-muted"><%= @user.bday %></small></p>

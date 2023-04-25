@@ -46,6 +46,7 @@ ru:
           user: Пользователь
           moderator: Модератор
           admin: Администратор
+        new_user: Новый пользователь
       department:
         title: Наименование
         body: Описание
