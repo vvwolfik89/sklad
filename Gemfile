@@ -11,6 +11,7 @@ gem "sprockets-rails"
 
 gem 'bootstrap', '>= 5.2.3'
 
+gem 'cancancan'
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
 

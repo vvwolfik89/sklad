@@ -3,7 +3,7 @@
     <div class="row g-0">
       <div class="col-md-4">
 <!--        <img src="..." class="img-fluid rounded-start" alt="...">-->
-        <%= image_tag @user.avatar, class: "img-fluid rounded-start" if current_user.avatar.attached? %>
+        <%= image_tag @user.avatar, class: "img-fluid rounded-start" if @user.avatar.attached? %>
       </div>
       <div class="col-md-8">
         <div class="card-body">

@@ -51,6 +51,7 @@ ru:
         body: Описание
         create_new_department: Создать новый отдел
         new_department: Новый отдел
+      new_user: Новый пользователь
 
   date:
     order: ["day", "month", "year"]

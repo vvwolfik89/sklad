@@ -1,17 +1,21 @@
-  <h1>Users</h1>
+  <h1><%= I18n.t("users")%></h1>
   <%= link_to 'New User', new_user_path %>
   <div>
     <div>
       <table class="table  table-striped">
         <thead>
         <tr>
-          <th scope="col">Title</th>
-          <th scope="col">body</th>
+          <th scope="col">Image</th>
+          <th scope="col">Full Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
         </tr>
         </thead>
         <tbody>
         <% @users.each do |user| %>
           <tr>
+            <td><%= image_tag user.avatar, class: " rounded-circle", style: "width: 40px; height: 40px;" if user.avatar.attached? %></td>
+            <td><%= user.full_name %></td>
             <td><a href="<%= user_path(user) %>">
               <h5> <%= user.email %></h5>
             </a></td>

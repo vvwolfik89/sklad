@@ -1,8 +1,10 @@
 <div>
   <h1>Departments</h1>
+  <% if current_user.admin?  %>
   <button type="button" class="btn btn-outline-primary">
-    <%= link_to I18n.t("activerecord.attributes.department.create_new_department"), new_department_path if current_user.admin? %>
+    <%= link_to I18n.t("activerecord.attributes.department.create_new_department"), new_department_path %>
   </button>
+  <% end %>
   <table class="table  table-striped">
     <thead>
     <tr>
