@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :departments
   resources :users
+  resources :roles
+  resources :permissions
   # Defines the root path route ("/")
   root "departments#index"
 end

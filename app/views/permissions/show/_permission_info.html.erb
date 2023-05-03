@@ -1,0 +1,8 @@
+<div class="tab-pane active" id="permission-info">
+  <%= show_action_field("Name:", dynamic_label: { object: @permission, field_name: :name }) { @permission.name } %>
+  <%= show_action_field("Action Name:", dynamic_label: { object: @permission, field_name: :action_name }) { @permission.action_name } %>
+  <%= show_action_field("Class Name:", dynamic_label: { object: @permission, field_name: :class_name }) { @permission.class_name } %>
+  <%= show_action_field("Is Active:", dynamic_label: { object: @permission, field_name: :is_active }) { boolean_badge(@permission.is_active) } %>
+  <%= show_action_field("Permission Category:", dynamic_label: { object: @permission, field_name: :permission_category_id }) { full_category_name(@permission.permission_category) } %>
+  <%= show_action_field("Description:", dynamic_label: { object: @permission, field_name: :description }) { @permission.description } %>
+</div>

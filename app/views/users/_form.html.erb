@@ -17,13 +17,13 @@
             <%# end %>
 
             <%# if can?(:view_agent_tier, @agent) %>
-            <%= f.input :role, collection: User.gender_attributes_for_select, include_blank: false  %>
+            <%= f.association :roles, collection: Role.all, include_blank: false, multiple: false %>
             <%# end %>
             <%= f.input :first_name %>
             <%= f.input :last_name %>
             <%= f.input :patronymic %>
             <%= f.input :email %>
-            <%= f.association :departments, collection: Department.all %>
+            <%= f.association :departments, collection: Department.all, class: "selectpicker", data_live_search: "true" %>
             <% if f.object.new_record? %>
             <div class="field">
               <%= f.label :password %>

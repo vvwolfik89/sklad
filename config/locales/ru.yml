@@ -34,6 +34,8 @@ ru:
   banner: "ЛИГМАТОН"
   users: Пользователи
   departments: Отделы
+  roles: Роли
+  permissions: Разрешения
   activerecord:
     attributes:
       user:
@@ -42,19 +44,32 @@ ru:
         patronymic: Отчество
         bday: День Рождения
         role: Роль
-        roles:
-          user: Пользователь
-          moderator: Модератор
-          admin: Администратор
         new_user: Новый пользователь
       department:
         title: Наименование
         body: Описание
         create_new_department: Создать новый отдел
         new_department: Новый отдел
-      new_user: Новый пользователь
+      role:
+        role_types:
+          super_admin:  Супер администратор
+          company_admin: Администратор
+          department_admin: Начальник отдела
+          department_admin_second: Заместитель начальника отдела
+          driver: Водитель
+          cleaner: Уборщик
+          picker: Кладовщик
+          loader: Комплектовщик
+
 
   date:
     order: ["day", "month", "year"]
     month_names: [Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]
+  time:
+    am: a.m.
+    formats:
+      default: '%a, %d %b %Y %H:%M:%S %z'
+      long: '%B %d, %Y %H:%M'
+      short: '%d %b %H:%M'
+    pm: p.m.
 

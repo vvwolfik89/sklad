@@ -5,12 +5,17 @@ class Ability
 
   def initialize(user)
     # Define abilities for the user here. For example:
-    #
+    user ||= User.new
     #   return unless user.present?
     #   can :read, :all
-    #   return unless user.admin?
-    #   can :manage, :all
-    #
+    if has_access_with_role_types?(user, 'super_admin')
+      can :manage, :all
+    end
+
+
+
+
+
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions
@@ -28,5 +33,11 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
+  end
+
+  protected
+
+  def has_access_with_role_types?(user, types)
+    user.roles.pluck(:role_type).include?(types)
   end
 end
