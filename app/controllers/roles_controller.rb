@@ -51,7 +51,7 @@ class RolesController < ApplicationController
   def update
     @role = Role.find(params[:id])
     respond_to do |format|
-      if @role.update(resource_params)
+      if @role.update(role_params)
         format.html { redirect_to @role, notice: 'Role was successfully updated.' }
         format.json { head :no_content }
       else

@@ -9,7 +9,7 @@
     <div class="panel">
       <div class="panel-heading">
         <span class="panel-title">
-          <span class="fa fa-table"></span>Permissions
+          <span class="fa "></span>Permissions
         </span>
       </div>
       <div class="panel-body pn">
@@ -17,9 +17,9 @@
           <div class="col-md-6 mt20 mb20">
             <%= link_to("New", new_permission_path, class: "btn btn-primary") if can?(:new, Permission) %>
           </div>
-          <div class="col-md-6 text-right">
-            <%= paginate @permissions %>
-          </div>
+<!--          <div class="col-md-6 text-right">-->
+            <%#= paginate @permissions %>
+<!--          </div>-->
           <div class="col-md-12">
             <table class="table table-hover table-striped">
               <thead>
@@ -41,7 +41,7 @@
                   <td><%= permission.action_name %></td>
                   <td><%= permission.class_name %></td>
                   <td><%= permission.is_active %></td>
-                  <td><%= l permission.created_at %></td>
+                  <td><%= permission.created_at %></td>
                   <td>
                     <%= link_to("Edit", edit_permission_path(permission), class: "btn btn-sm btn-default") if can?(:edit, permission) %>
                     <%= link_to("Destroy", permission_path(permission), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-danger") if can?(:destroy, permission) %>
@@ -52,9 +52,9 @@
             </table>
           </div>
 
-          <div class="col-md-12 text-right">
-            <%= paginate @permissions %>
-          </div>
+<!--          <div class="col-md-12 text-right">-->
+            <%#= paginate @permissions %>
+<!--          </div>-->
         </div>
       </div>
     </div>

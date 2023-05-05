@@ -102,4 +102,12 @@ module ApplicationHelper
     classes << 'active' if tab_name == params[:tab] || (default && params[:tab].blank?)
     classes.join(' ')
   end
+
+  def boolean_badge(boolean)
+    if boolean
+      content_tag(:span, 'Yes', class: 'badge badge-success')
+    else
+      content_tag(:span, 'No', class: 'badge badge-error')
+    end
+  end
 end

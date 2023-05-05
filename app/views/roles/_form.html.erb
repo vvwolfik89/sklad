@@ -7,6 +7,7 @@
             <%= f.input :title %>
             <%= f.input :description %>
             <%= f.input :role_type, collection: Role.role_type_attributes_for_select, include_blank: false  %>
+            <%= f.association :permissions, collection: Permission.all, include_blank: true  %>
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-2">
                 <%= f.button :submit, "Save", class: "btn-primary btn-block" %>

@@ -18,8 +18,8 @@
           <% end %>
           <p class="card-text"><small class="text-muted"><%= @user.bday %></small></p>
           <div class="mb15">
-            <%= link_to("Edit", edit_user_path(@user), class: "btn btn-primary btn-block pv10 fw600 mb10") %>
-            <%= link_to("Destroy", user_path(@user), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-block") %>
+            <%= link_to("Edit", edit_user_path(@user), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, User)  %>
+            <%= link_to("Destroy", user_path(@user), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-block") if can?(:destroy, User) %>
           </div>
         </div>
       </div>

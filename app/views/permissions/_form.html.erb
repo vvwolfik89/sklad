@@ -11,9 +11,10 @@
           <%= f.input :name %>
           <%= f.input :action_name %>
           <%= f.input :class_name %>
-          <%= f.input :is_active %>
-          <%= f.association :permission_category, collection: permission_cat_collection %>
+
+          <%#= f.association :permission_category, collection: permission_cat_collection %>
           <%= f.input :description %>
+          <%= f.input :is_active %>
 
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-2">

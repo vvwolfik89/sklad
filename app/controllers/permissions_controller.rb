@@ -2,7 +2,7 @@ class PermissionsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @permissions = Permission.order(:name).page(params[:page])
+    @permissions = Permission.all #.order(:name).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,8 +44,9 @@ class PermissionsController < ApplicationController
   end
 
   def update
+
     respond_to do |format|
-      if @permission.update_attributes(permission_params)
+      if @permission.update(permission_params)
         format.html { redirect_to @permission, notice: 'Permission was successfully updated.' }
         format.json { head :no_content }
       else
