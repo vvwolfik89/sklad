@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   private
 
   def resource_params
-    permited_fields = [ :email, :role, :avatar, :bday, :first_name, :last_name, :patronymic ]
+    permited_fields = [:email, {role_ids: []}, :avatar, :bday, :first_name, :last_name, :patronymic, :password, :password_confirmation, {department_ids: []}  ]
     params.require(:user).permit(permited_fields)
   end
 end

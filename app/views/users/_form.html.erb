@@ -4,18 +4,40 @@
       <div class="bs-component">
         <div class="tab-pane" id="users">
           <div class="row">
-            <%#= f.association :roles, collection: available_roles %>
+            <% if @user.errors.present? %>
+              <div class="alert alert-danger">
+                <% @user.errors.full_messages.each do |msg| %>
+                  <p><%= msg %></p>
+                <% end %>
+              </div>
+            <% end %>
 
             <%# if can? :set_active, @agent %>
             <%#= f.input :is_active %>
             <%# end %>
 
             <%# if can?(:view_agent_tier, @agent) %>
-            <%= f.input :role, collection: User.gender_attributes_for_select, include_blank: false  %>
+            <%= f.association :roles, collection: Role.all, include_blank: false, multiple: false %>
             <%# end %>
             <%= f.input :first_name %>
             <%= f.input :last_name %>
             <%= f.input :patronymic %>
+            <%= f.input :email %>
+            <%= f.association :departments, collection: Department.all, class: "selectpicker", data_live_search: "true" %>
+            <% if f.object.new_record? %>
+            <div class="field">
+              <%= f.label :password %>
+              <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br />
+              <%= f.password_field :password, autocomplete: "new-password" %>
+            </div>
+
+            <div class="field">
+              <%= f.label :password_confirmation %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+            </div>
+            <% end %><br />
             <div class='field p-3'>
               <%= f.label :bday %>
               <%= f.date_select :bday, start_year: 1950 %>

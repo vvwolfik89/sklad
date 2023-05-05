@@ -88,6 +88,26 @@ module ApplicationHelper
   end
 
   def admin
-    User.where(role: :admin).last
+    # User.where(roles: :admin).last
+  end
+
+  def tab_link_for(tab_name, text, default = false)
+    content_tag(:li, class: tab_pane_class_for(tab_name, default)) do
+      link_to(text, "##{tab_name}", data: { toggle: 'tab' })
+    end
+  end
+
+  def tab_pane_class_for(tab_name, default = false)
+    classes = ["tab-#{tab_name}"]
+    classes << 'active' if tab_name == params[:tab] || (default && params[:tab].blank?)
+    classes.join(' ')
+  end
+
+  def boolean_badge(boolean)
+    if boolean
+      content_tag(:span, 'Yes', class: 'badge badge-success')
+    else
+      content_tag(:span, 'No', class: 'badge badge-error')
+    end
   end
 end

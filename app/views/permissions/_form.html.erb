@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title"><%= @permission.name || "Permission" %></span>
+      </div>
+      <div class="panel-body">
+        <%= custom_form_for(@permission, bootstrap3_form_options) do |f| %>
+          <%= f.error_notification %>
+
+          <%= f.input :name %>
+          <%= f.input :action_name %>
+          <%= f.input :class_name %>
+
+          <%#= f.association :permission_category, collection: permission_cat_collection %>
+          <%= f.input :description %>
+          <%= f.input :is_active %>
+
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-2">
+              <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
+            </div>
+            <div class="col-sm-2">
+              <%= link_to("Cancel", permissions_path, class: "btn btn-default btn-block") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

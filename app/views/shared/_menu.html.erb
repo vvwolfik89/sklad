@@ -10,8 +10,8 @@
         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
       </div>
       <div class="ms-3">
-        <h6 class="mb-0"><%= admin.full_name %></h6>
-        <span><%= admin.role.capitalize %></span>
+<!--        <h6 class="mb-0"><%#= admin.full_name %></h6>-->
+<!--        <span><%#= admin.role.capitalize %></span>-->
       </div>
     </div>
     <div class="navbar-nav w-100">
@@ -24,8 +24,10 @@
           <a href="element.html" class="dropdown-item">Other Elements</a>
         </div>
       </div>
-      <%= link_to "#{fa_icon("th me-2")} #{I18n.t("users")}".html_safe, users_path, class: "nav-item nav-link" %>
+      <%= link_to "#{fa_icon("th me-2")} #{I18n.t("users")}".html_safe, users_path, class: "nav-item nav-link" if can?(:crud, User) %>
       <%= link_to "#{fa_icon("table me-2")} #{I18n.t("departments")}".html_safe, departments_path, class: "nav-item nav-link" %>
+      <%= link_to "#{fa_icon("keyboard me-2")} #{I18n.t("roles")}".html_safe, roles_path, class: "nav-item nav-link" %>
+      <%= link_to "#{fa_icon("chart-bar  me-2")} #{I18n.t("permissions")}".html_safe, permissions_path, class: "nav-item nav-link" %>
       <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
       <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
       <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
