@@ -1,0 +1,33 @@
+  <h1><%= I18n.t("cars")%></h1>
+  <%= link_to 'New Car', new_car_path %>
+  <div>
+    <div>
+      <table class="table  table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Full Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @cars %>
+        <% @cars.each do |car| %>
+          <tr>
+            <td><%= image_tag car.avatar, class: " rounded-circle", style: "width: 40px; height: 40px;" if car.avatar.attached? %></td>
+            <td><%= car.full_name %></td>
+            <td><a href="<%= car_path(car) %>">
+              <h5> <%= car.email %></h5>
+            </a></td>
+            <td><% car.roles.each do |role| %>
+                <p><%= link_to(role.title, role_path(role), class: "col-sm-4") %></p>
+                <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

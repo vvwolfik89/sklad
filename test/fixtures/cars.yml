@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  registration_number: MyString
+  model: MyString
+  brand: MyString
+  date_registration: 2023-05-12
+  date_of_manufacture: 2023-05-12
+  fuel_type: 1
+  vin: MyString
+  vin_equipment: MyString
+  date_to: 2023-05-12
+  date_safety: 2023-05-12
+
+two:
+  registration_number: MyString
+  model: MyString
+  brand: MyString
+  date_registration: 2023-05-12
+  date_of_manufacture: 2023-05-12
+  fuel_type: 1
+  vin: MyString
+  vin_equipment: MyString
+  date_to: 2023-05-12
+  date_safety: 2023-05-12

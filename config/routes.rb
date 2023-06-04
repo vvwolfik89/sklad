@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users
   resources :roles
   resources :permissions
+  resources :cars
   # Defines the root path route ("/")
   root "departments#index"
 end
