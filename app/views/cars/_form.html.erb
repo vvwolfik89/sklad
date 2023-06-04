@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-12">
+    <%= custom_form_for(@car, bootstrap3_form_options(html_class: "agent-form")) do |f| %>
+      <div class="bs-component">
+        <div class="tab-pane" id="cars">
+          <div class="row">
+            <% if @car.errors.present? %>
+              <div class="alert alert-danger">
+                <% @car.errors.full_messages.each do |msg| %>
+                  <p><%= msg %></p>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%# if can? :set_active, @agent %>
+            <%#= f.input :is_active %>
+            <%# end %>
+
+            <%# if can?(:view_agent_tier, @agent) %>
+            <%#= f.association :roles, collection: Role.all, include_blank: false, multiple: false %>
+            <%# end %>
+            <%= f.input :registration_number %>
+            <%= f.input :model %>
+            <%= f.input :brand %>
+            <div class='field p-3'>
+              <%= f.label :date_registration %>
+              <%= f.date_select :date_registration, start_year: 2020 %>
+            </div>
+            <div class='field p-3'>
+              <%= f.label :date_of_manufacture %>
+              <%= f.date_select :date_of_manufacture, start_year: 2020 %>
+            </div>
+            <%= f.input :fuel_type, collection: Car.fuel_type_attributes_for_select, include_blank: false  %>
+            <%= f.input :vin %>
+            <%= f.input :vin_equipment %>
+            <div class='field p-3'>
+              <%= f.label :date_to %>
+              <%= f.date_select :date_to, start_year: 2020 %>
+            </div>
+            <div class='field p-3'>
+              <%= f.label :date_safety %>
+              <%= f.date_select :date_safety, start_year: 2020 %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-offset-3 col-sm-2 p-3">
+              <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
+              <%= link_to("Cancel", cars_path, class: "btn btn-dark btn-block") %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    <% end %>
+  </div>
+</div>

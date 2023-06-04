@@ -35,6 +35,7 @@ ru:
   users: Пользователи
   departments: Отделы
   roles: Роли
+  cars: Авто
   permissions: Разрешения
   activerecord:
     attributes:
@@ -61,6 +62,20 @@ ru:
           picker: Кладовщик
           loader: Комплектовщик
       permissions:
+      car:
+        registration_number: Регистрационный номер
+        model: Модель
+        brand: Марка
+        date_registration: Дата регистрации
+        date_of_manufacture: Дата выпуска
+        fuel_type: Тип топлива
+        vin: ВИН Кузова
+        vin_equipment: Дополнительный ВИН
+        date_to: Дата следующего ТО
+        date_safety: Дата окончания страховки
+        fuel_types:
+          diesel: Дизель
+          gas: Бензин
   date:
     order: ["day", "month", "year"]
     month_names: [Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]
