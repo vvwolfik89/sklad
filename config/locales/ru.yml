@@ -37,6 +37,7 @@ ru:
   roles: Роли
   cars: Авто
   permissions: Разрешения
+  registers: Журналы
   activerecord:
     attributes:
       user:
@@ -76,6 +77,8 @@ ru:
         fuel_types:
           diesel: Дизель
           gas: Бензин
+      registers:
+        car_register: Журнал ежедневного осмотра транспортных средств
   date:
     order: ["day", "month", "year"]
     month_names: [Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]

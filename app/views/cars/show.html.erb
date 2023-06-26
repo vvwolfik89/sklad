@@ -3,23 +3,16 @@
     <div class="row g-0">
       <div class="col-md-4">
 <!--        <img src="..." class="img-fluid rounded-start" alt="...">-->
-        <%= image_tag @car.avatar, class: "img-fluid rounded-start" if @car.avatar.attached? %>
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title"><%= @car.full_name %></h5>
-          <% @car.departments.each do |department| %>
-            <p><%= link_to(department.title, department_path(department), class: "col-sm-4") %></p>
-          <% end %>
-          <p class="card-text"><%= @car.email %></p>
-<!--          <p class="card-text"><%#= I18n.t("activerecord.attributes.car.roles.#{@car.roles}") %></p>-->
-          <% @car.roles.each do |role| %>
-            <p><%= link_to(role.title, role_path(role), class: "col-sm-4") %></p>
-          <% end %>
-          <p class="card-text"><small class="text-muted"><%= @car.bday %></small></p>
+          <h5 class="card-title"><%= @car.registration_number %></h5>
+          <p class="card-text"><%= @car.model %></p>
+          <p class="card-text"><%= @car.brand %></p>
           <div class="mb15">
-            <%= link_to("Edit", edit_car_path(@car), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, car)  %>
-            <%= link_to("Destroy", car_path(@car), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-block") if can?(:destroy, car) %>
+            <%= link_to("Edit", edit_car_path(@car), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, @car)  %>
+            <%= link_to("Destroy", car_path(@car), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-block") if can?(:destroy, @car) %>
+            <%= link_to("All Cars", cars_path, class: "btn btn-block btn-dark pv10 fw600 mb10")%>
           </div>
         </div>
       </div>

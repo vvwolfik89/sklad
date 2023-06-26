@@ -1,0 +1,13 @@
+<%= content_for :breadcrumbs do %>
+  <li class="crumb-link">
+    <%= link_to("Roles", roles_path) %>
+  </li>
+  <li class="crumb-link">
+    <%= link_to(@role.title, role_path(@role)) %>
+  </li>
+  <li class="crumb-trail">
+    Edit
+  </li>
+<% end %>
+
+<%= render partial: "form" %>
