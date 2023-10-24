@@ -1,9 +1,9 @@
 <%= content_for :breadcrumbs do %>
   <li class="crumb-link">
-    <%= link_to("Roles", roles_path) %>
+    <%= link_to("Car Register", registers_car_inspections_path) %>
   </li>
   <li class="crumb-link">
-    <%= link_to(@role.title, role_path(@role)) %>
+    <%= link_to(@car_inspection.id, registers_car_inspections_path(@car_inspection)) %>
   </li>
   <li class="crumb-trail">
     Edit

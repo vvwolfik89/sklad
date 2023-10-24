@@ -29,12 +29,12 @@
       <%= link_to "#{fa_icon("keyboard me-2")} #{I18n.t("roles")}".html_safe, roles_path, class: "nav-item nav-link" %>
       <%= link_to "#{fa_icon("chart-bar  me-2")} #{I18n.t("permissions")}".html_safe, permissions_path, class: "nav-item nav-link" %>
       <%= link_to "#{fa_icon("car  me-2")} #{I18n.t("cars")}".html_safe, cars_path, class: "nav-item nav-link" %>
-      <%#= link_to "#{fa_icon("keyboard  me-2")} #{I18n.t("registers")}".html_safe, registers_car_registers_path, class: "nav-item nav-link" %>
+      <%#= link_to "#{fa_icon("keyboard  me-2")} #{I18n.t("registers")}".html_safe, registers_car_inspections_path, class: "nav-item nav-link" %>
 
       <div class="nav-item dropdown">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i><%=  I18n.t("registers") %></a>
         <div class="dropdown-menu bg-transparent border-0">
-          <%= link_to "#{I18n.t("activerecord.attributes.registers.car_register")}".html_safe, registers_car_registers_path, class: "dropdown-item", style: "width: 100px;
+          <%= link_to "#{I18n.t("activerecord.attributes.registers.car_inspection")}".html_safe, registers_car_inspections_path, class: "dropdown-item", style: "width: 100px;
         background: #7cd4ae;
         word-wrap: break-word;
         word-break: break-all;" %>

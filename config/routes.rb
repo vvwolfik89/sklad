@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :permissions
   resources :cars
   namespace :registers do
-    resources :car_registers
+    resources :car_inspections
   end
   # Defines the root path route ("/")
   root "departments#index"

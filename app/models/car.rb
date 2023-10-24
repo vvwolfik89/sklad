@@ -2,6 +2,8 @@ class Car < ApplicationRecord
 
   enum fuel_type: [:diesel, :gas]
 
+  has_many :registers_car_inspections, class_name: 'Registers::CarRegister', foreign_key: :car_id, through: 'cars_registers'
+
   validates :registration_number, :model, :brand, :date_registration, :date_of_manufacture, :fuel_type, :vin, :vin_equipment, :date_to, :date_safety, presence: true
 
   validates :registration_number, :vin, :vin_equipment, uniqueness: true
