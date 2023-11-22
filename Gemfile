@@ -81,6 +81,14 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
   gem 'rails-controller-testing'
+  gem 'factory_bot_rails'
+  gem "minitest-rails"
+  gem 'mocha'
+  gem 'webmock'
+  gem 'shoulda'
+  gem 'minitest-reporters'
+  gem 'pry'
+  gem 'minitest-rails-capybara'
 end
 
 gem "cssbundling-rails", "~> 1.1"
