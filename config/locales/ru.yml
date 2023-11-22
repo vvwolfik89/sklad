@@ -37,6 +37,7 @@ ru:
   roles: Роли
   cars: Авто
   permissions: Разрешения
+  registers: Журналы
   activerecord:
     attributes:
       user:
@@ -76,6 +77,19 @@ ru:
         fuel_types:
           diesel: Дизель
           gas: Бензин
+      registers:
+        car_inspection: Журнал ежедневного осмотра транспортных средств
+      car_inspection:
+        inspect_lighting: Осмотр осветительного оборудования и электрических розеток
+        steering_check: Проверка рулевого управления
+        tire_condition: Осмотр состояния шин
+        body_condition: Осмотр состояния кузова
+        checking_brake: Проверка тормозной системы и стояночного тормоза
+        checking_windshield: Проверка работоспособности стеклоочистительной системы
+        checking_termoking: Проверка работоспособности TermoKing
+        checking_termotrans: Проверка работоспособности Termotrans
+        checking_unitess: Проверка работоспособности системы Unitess
+        notes: Примечание
   date:
     order: ["day", "month", "year"]
     month_names: [Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]

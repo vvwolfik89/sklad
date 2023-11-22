@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-12">
+    <%= custom_form_for(@car_inspection, bootstrap3_form_options) do |f| %>
+      <%= f.error_notification %>
+      <%= f.collection_select :car_id, Car.all, :id, :registration_number %>
+      <%= f.input :inspect_lighting, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.inspect_lighting") %>
+      <%= f.input :steering_check, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.steering_check") %>
+      <%= f.input :tire_condition, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.tire_condition") %>
+      <%= f.input :body_condition, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.body_condition") %>
+      <%= f.input :checking_brake, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.checking_brake") %>
+      <%= f.input :checking_windshield, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.checking_windshield") %>
+      <%= f.input :checking_termoking, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.checking_termoking") %>
+      <%= f.input :checking_termotrans, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.checking_termotrans") %>
+      <%= f.input :checking_unitess, as: :boolean, label: I18n.t("activerecord.attributes.car_inspection.checking_unitess") %>
+      <%= f.input :notes, as: :text, label: I18n.t("activerecord.attributes.car_inspection.notes") %>
+
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-2">
+          <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
+        </div>
+        <div class="col-sm-2">
+          <%= link_to("Cancel", :back, class: "btn btn-default btn-block") %>
+        </div>
+      </div>
+<!--      <div class="bs-component">-->
+<!--        <div class="panel">-->
+<!--          <div class="panel-body">-->
+<!--            <div class="form-group">-->
+              <%#= f.label :car_id, class: 'col-sm-3 control-label' %>
+<!--              <div class="col-sm-9">-->
+                <%#= f.collection_select :car_id, Car.all, :id, :registration_number %>
+                <%#= f.input :inspect_lighting, as: :boolean %>
+<!--                <div class="form-group">-->
+                  <%#= f.input :inspect_lighting, as: :boolean, required: true, label: I18n.t("activerecord.attributes.car_inspection.steering_check"), class: 'form-control' %>
+<!--                </div>-->
+<!--                <div class="form-group">-->
+                  <%#= f.input :inspect_lighting, as: :text, required: true, label: 'Phones', class: 'form-control' %>
+<!--                </div>-->
+
+
+
+<!--              </div>-->
+<!--            </div>-->
+            <%#= f.input :car_id %>
+            <%#= f.input :role_type, collection: Role.role_type_attributes_for_select, include_blank: false  %>
+            <%#= f.association :permissions, collection: Permission.all, include_blank: true  %>
+<!--            <div class="form-group">-->
+<!--              <div class="col-sm-offset-3 col-sm-2">-->
+                <%#= f.button :submit, "Save", class: "btn-primary btn-block" %>
+<!--              </div>-->
+<!--              <div class="col-sm-2">-->
+                <%#= link_to("Cancel", registers_car_inspections_path, class: "btn btn-default btn-block") %>
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+    <% end %>
+  </div>
+</div>

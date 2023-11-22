@@ -59,12 +59,32 @@ module ApplicationHelper
   def show_action_field(label, dynamic_label: nil, &block)
     content_tag(:div, class: 'form-group') do
       # title = show_action_field_label(label, dynamic_label: dynamic_label)
-      # concat(content_tag(:label, title, class: 'col-sm-3 control-label'))
+      title =  label
+      concat(content_tag(:label, title, class: 'col-sm-3 control-label'))
       concat(content_tag(:div, class: 'col-sm-9') do
         content_tag(:div, class: 'bs-component') do
           content_tag(:p, yield, class: 'form-control-static text-muted')
         end
       end)
+    end
+  end
+
+  def show_action_field_label(label, dynamic_label: nil)
+    if dynamic_label
+      class_name = dynamic_label[:object].class.name
+
+      d_label = field_note_label(class_name, dynamic_label[:field_name], default_label: label).gsub(':', '')
+      hint = nil
+      # hint = field_note_description(class_name, dynamic_label[:field_name])
+
+      default_label = if hint.present?
+                        "#{d_label} #{content_tag(:span, nil, class: 'fa fa-question-circle-o mh5', data: {toggle: 'popover', html: true, content: hint})}".html_safe
+                      else
+                        d_label
+                      end
+      (default_label + ':').html_safe
+    else
+      label
     end
   end
 
@@ -110,4 +130,13 @@ module ApplicationHelper
       content_tag(:span, 'No', class: 'badge badge-error')
     end
   end
-end
+
+  def boolean_badge_check(boolean)
+    if boolean
+      # content_tag(:li,'', class: 'fa-solid fa-check')
+      content_tag(:i, nil, class: "fa fa-duotone fa-check")
+    else
+      content_tag(:li, 'No', class: 'badge badge-error')
+    end
+  end
+ end

@@ -1,0 +1,13 @@
+<%= content_for :breadcrumbs do %>
+  <li class="crumb-link">
+    <%= link_to("Car Register", registers_car_inspections_path) %>
+  </li>
+  <li class="crumb-link">
+    <%= link_to(@car_inspection.id, registers_car_inspections_path(@car_inspection)) %>
+  </li>
+  <li class="crumb-trail">
+    Edit
+  </li>
+<% end %>
+
+<%= render partial: "form" %>

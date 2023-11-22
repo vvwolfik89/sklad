@@ -1,9 +1,26 @@
 require "test_helper"
+# require 'support/sign_in'
 require "support/model_helper"
 
-class DepartmentsControllerTest < ActionDispatch::IntegrationTest
 
+class DepartmentsControllerTest < ActionDispatch::IntegrationTest
+  # include SignIn
   include ModelHelper
+
+  let(:user) { users(:superadmin) }
+
+  let(:success_attributes) do
+    {
+      title: 'some event',
+      start: '2018-11-12 16:00',
+      end: '2018-11-12 19:00'
+    }
+  end
+
+  setup do
+    sign_in(user)
+    # Time.stubs(current: Time.utc(2015, 10, 10))
+  end
 
 
   test "should get index" do

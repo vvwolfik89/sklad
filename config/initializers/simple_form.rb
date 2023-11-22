@@ -72,13 +72,14 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group container', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
 
     b.wrapper tag: 'div', class: 'col-sm-offset-3 col-sm-9' do |wr|
       wr.wrapper tag: 'div', class: 'checkbox' do |ba|
-        ba.use :label_input, class: 'col-sm-9'
+        ba.use :label, class: 'col-sm-8'
+        ba.use :input, class: 'col-sm-1'
       end
 
       wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }
@@ -104,4 +105,10 @@ SimpleForm.setup do |config|
   # to learn about the different styles for forms and inputs,
   # buttons and other elements.
   config.default_wrapper = :vertical_form
+
+  # Default tag used for error notification helper.
+  config.error_notification_tag = :div
+
+  # CSS class to add for error notification helper.
+  config.error_notification_class = 'alert alert-error'
 end
