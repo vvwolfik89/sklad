@@ -80,6 +80,7 @@ ru:
       registers:
         car_inspection: Журнал ежедневного осмотра транспортных средств
       car_inspection:
+        registration_number: Гос. номер
         inspect_lighting: Осмотр осветительного оборудования и электрических розеток
         steering_check: Проверка рулевого управления
         tire_condition: Осмотр состояния шин

@@ -14,15 +14,14 @@
       </div>
       <div class="panel-body pn">
         <div class="bs-component">
-          <div class="col-md-6 mt20 mb20">
+          <div class="">
             <%= link_to("New", new_registers_car_inspection_path, class: "btn btn-primary") %>
-            <div class="col-md-12">
+            <div class="col-md-12 head_rotate" style="overflow:auto;">
               <table class="table table-hover table-striped">
                 <%= render partial: "table_head" %>
                 <tbody>
                 <% @car_inspections.each do |cr| %>
                   <tr>
-                    <td><%= cr.id %></td>
                     <td><%= cr.car.registration_number %></td>
                     <td><%= boolean_badge_check(cr.inspect_lighting) %></td>
                     <td><%= boolean_badge_check(cr.steering_check) %></td>
@@ -34,12 +33,11 @@
                     <td><%= boolean_badge_check(cr.checking_termotrans) %></td>
                     <td><%= boolean_badge_check(cr.checking_unitess) %></td>
                     <td><%= cr.notes %></td>
-                    <td><%= cr.created_at %></td>
+                    <td><%= cr.created_at.strftime("%d.%m.%Y") %></td>
                     <td><%= cr.user.full_name %></td>
                     <td>
                       <%= link_to("Edit", edit_registers_car_inspection_path(cr), class: "btn btn-sm btn-default") if can?(:edit, cr) %>
                       <%= link_to("Destroy", registers_car_inspections_path(cr), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-danger") if can?(:destroy, cr) %>
-                      <%#= link_to("Copy", copy_role_path(role), class: "btn btn-sm btn-default") if can?(:copy, role) %>
                     </td>
                   </tr>
                 <% end %>

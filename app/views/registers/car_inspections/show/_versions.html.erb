@@ -1,0 +1,47 @@
+<div class="tab-pane fade" id="nav-car-inspection-versions" role="tabpanel" aria-labelledby="nav-car-inspection-versions-tab">
+  <%= render('shared/versions', object: @car_inspection, set_version_path: nil) %>
+<!--  <div class="tabbable tabs-below">-->
+<!--    <ul class="nav nav-tabs">-->
+      <%#= tab_link_for("versions", "Client Versions", true) %>
+      <%#= tab_link_for("associations-versions", "Associations Versions") %>
+      <%#= tab_link_for("yodel-customer-entries-versions", "Yodel Customer Entry Versions") %>
+<!--    </ul>-->
+<!--  </div>-->
+<!--  <div class="tab-content mt10">-->
+<!--    <div class="tab-pane active" id="versions">-->
+      <%#= render('shared/versions', object: @client, set_version_path: nil) %>
+<!--    </div>-->
+    <%#= render("shared/has_one_associations_versions", object: @client, associations: nested_associations_version_helper(@client, ['client_internal_transfer_job_setting', 'transfer_job_setting', 'mailer_transfer_job_setting', 'lead_mailer_job_setting'])) %>
+<!--    <div class="tab-pane" id="yodel-customer-entries-versions">-->
+<!--      <div class="tab-pane" id="associations-versions">-->
+<!--        <div class="tabbable tabs-below">-->
+<!--          <ul class="nav nav-tabs">-->
+            <%# @client.client_yodel_customer_entries.each_with_index do |association_record, index| %>
+              <%#= tab_link_for(dom_id(association_record), "#{association_record.model_name.human} id #{association_record.id} #{association_record.try(:name)}", index == 0) %>
+            <%# end %>
+<!--          </ul>-->
+<!--        </div>-->
+<!--        <div class="tab-content mt10">-->
+          <%# @client.client_yodel_customer_entries.each_with_index do |association_record, index| %>
+<!--            <div class="tab-pane <%#= index == 0 ? 'active' : '' %>" id="<%#= dom_id(association_record) %>">-->
+<!--              <div class="tabbable tabs-below">-->
+<!--                <ul class="nav nav-tabs">-->
+                  <%#= tab_link_for("#{dom_id(association_record)}-versions", "Customer Entry Version", true) %>
+                  <%#= tab_link_for("#{dom_id(association_record)}-associations-versions", "Credit Setting Versions") %>
+<!--                </ul>-->
+<!--              </div>-->
+<!--              <div class="tab-content mt10">-->
+<!--                <div class="tab-pane active" id="<%#= dom_id(association_record) %>-versions">-->
+                  <%#= render('shared/versions', object: association_record, set_version_path: nil) %>
+<!--                </div>-->
+<!--                <div class="tab-pane" id="<%#= dom_id(association_record) %>-associations-versions">-->
+                  <%#= render("shared/has_one_associations_versions", object: @client, associations: nested_associations_version_helper(association_record, ['credit_setting'])) %>
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+          <%# end %>
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>

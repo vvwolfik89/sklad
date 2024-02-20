@@ -1,0 +1,92 @@
+.container-xxl > .content {
+  margin-left: 0px;
+  width: calc(100% + 250px);
+}
+
+.table .head_rotate{
+  //table-layout: fixed;
+  //width: 50px;
+  //table-layout: auto;
+  //width: 10px;
+}
+//
+//.head_rotate table{
+//  //width: 100%;
+//  table-layout: auto;
+//}
+//
+//
+.head_rotate thead tr th{
+  //position: absolute;
+  //width: 100%;
+  //overflow: hidden;
+  //white-space: nowrap;
+  //text-overflow: ellipsis;
+  //width: 200px;
+//  //height: 100px;
+//  height: 200px;
+//  //display: inline-block;
+//  //overflow-y: scroll;
+//  white-space: nowrap;
+//   //transform-origin: top left;
+//  transform: rotate(-90deg);
+}
+
+.head_rotate {
+  //th {
+  //  border: 1px solid;
+  //  height: 28px;
+  //  position: relative;
+  //  padding: 0;
+  //}
+  //div {
+  //  width: 80px;
+  //  white-space: nowrap;
+  //  overflow: hidden;
+  //  text-overflow: ellipsis;
+  //  height: 100%;
+  //}
+  //div:hover {
+  //  text-overflow: clip;
+  //  position: absolute;
+  //  width: auto;
+  //  top: 0;
+  //  left: 0;
+  //}
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  table th {
+    width: 7%;
+    font-size: 14px;
+    line-height: 15px;
+    height: 15px;
+    padding: 10px 0;
+
+  }
+  table tbody {
+    //display: block;
+    padding: 50px 0;
+    font-size: 14px;
+  }
+  table th>div { position: relative; }
+  table th>div div {
+    padding: 0 10px;
+    background: #fff;
+    display: block;
+    position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+  table th>div div:hover {
+    white-space: normal;
+    z-index: 1;
+  }
+}

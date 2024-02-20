@@ -6,8 +6,7 @@ module Registers
     belongs_to :car
     belongs_to :user
 
-
-
+    has_paper_trail on: [:update]
 
     def inspect_lighting=(value)
       super(ActiveRecord::Type::Boolean.new.cast(value))

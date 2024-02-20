@@ -1,55 +1,30 @@
 <%= content_for :breadcrumbs do %>
-    <li class="crumb-link">
-      <%= link_to("Roles", roles_path) %>
-    </li>
-    <li class="crumb-trail">
-      <%#= @car_inspection.name %>
-    </li>
+  <li class="crumb-link">
+    <%= link_to("Car Inspections", registers_car_inspections_path) %>
+  </li>
+  <li class="crumb-trail">
+    <%#= @car_inspection.name %>
+  </li>
 <% end %>
 
 <div class="row">
   <div class="col-md-12">
     <div class="panel">
       <div class="panel-heading">
-<!--        <span class="panel-title"><%#= @car_inspection.name %></span>-->
-        <%#= panel_help_desk_link_helper('panel-role-main') %>
+        <h5 class="card-title"><%= @car_inspection.car.registration_number %></h5>
+        <h5 class="card-title"><%= @car_inspection.created_at %></h5>
       </div>
-      <div class="panel-body">
-        <form class="form-horizontal" role="form">
-          <div class="bs-component">
-            <div class="panel">
-              <h5 class="card-title"><%= @car_inspection.car.registration_number %></h5>
-<!--              <p class="card-text"><%#= I18n.t("activerecord.attributes.role.role_types.#{@car_inspection.role_type}") %></p>-->
-              <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.inspect_lighting"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.inspect_lighting) } %>
- <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.steering_check"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.steering_check) } %>
- <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.tire_condition"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.tire_condition) } %>
- <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.body_condition"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.body_condition) } %>
- <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.checking_brake"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.checking_brake) } %>
- <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.checking_windshield"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.checking_windshield) } %>
- <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.checking_termoking"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.checking_termoking) } %>
-              <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.checking_termotrans"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.checking_termotrans) } %>
-  <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.checking_unitess"), dynamic_label: { object: @car_inspection, field_name: :title }) { boolean_badge_check(@car_inspection.checking_unitess) } %>
-              <%= show_action_field(I18n.t("activerecord.attributes.car_inspection.notes"), dynamic_label: { object: @car_inspection, field_name: :title }) { @car_inspection.notes } %>
-
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2">
-              <%= link_to("Back", registers_car_inspections_path, class: "btn btn-default btn-block") %>
-            </div>
-            <% if can?(:edit, @car_inspection) %>
-                <div class="col-sm-2">
-                  <%= link_to("Edit", edit_registers_car_inspection_path(@car_inspection), class: "btn btn-primary btn-block") %>
-                </div>
-            <% end %>
-            <% if can?(:destroy, @car_inspection) %>
-                <div class="col-sm-2">
-                  <%= link_to("Destroy", registers_car_inspections_path(@car_inspection), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-block") %>
-                </div>
-            <% end %>
-          </div>
-        </form>
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nav-car-info-tab" data-bs-toggle="tab" data-bs-target="#nav-car-info" type="button" role="tab" aria-controls="nav-car-info" aria-selected="true">Car
+            Info
+          </button>
+          <button class="nav-link" id="nav-car-inspection-versions-tab" data-bs-toggle="tab" data-bs-target="#nav-car-inspection-versions" type="button" role="tab" aria-controls="nav-car-inspection-versions" aria-selected="false">Versions</button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <%= render "registers/car_inspections/show/car_inspection_info", active: tab_pane_class_for("car-inspection-info", true) %>
+        <%= render "registers/car_inspections/show/versions", active: tab_pane_class_for("car-inspection-versions") %>
       </div>
     </div>
   </div>

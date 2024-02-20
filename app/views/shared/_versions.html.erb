@@ -1,0 +1,27 @@
+<table class="table table-striped table-hover table-bordered">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Created At</th>
+    <th>Author whodunnit</th>
+    <th>Author version_author</th>
+    <th>Event</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% object.send(local_assigns[:versions] || :versions).each_with_index do |version, index| %>
+    <tr class="<%= 'info' if index == 0 %>">
+      <td></td>
+      <td><%= version.created_at %></td>
+      <td><%= link_to(version.user.full_name, user_path(version.whodunnit)) if version.whodunnit %></td>
+      <td><%= version.event %></td>
+      <td>
+        <%#= render('shared/change_set', version: version) if version.changeset.present? %>
+        <%#= set_version_link(set_version_path, version.id) if set_version_path.present? && version.event != 'create' %>
+        <%#= render('shared/change_notes', version: version) if version.change_notes.present? %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
