@@ -13,14 +13,14 @@ module Registers
       end
     end
 
-    def show
-      @car_inspection = Registers::CarInspection.find(params[:id])
-      # @activities = @car_inspection.activities.where(key: 'role.save_changes').order(:created_at)
-      respond_to do |format|
-        format.html
-        format.json {render json: @car_inspection}
-      end
-    end
+    # def show
+    #   @car_inspection = Registers::CarInspection.find(params[:id])
+    #   # @activities = @car_inspection.activities.where(key: 'role.save_changes').order(:created_at)
+    #   respond_to do |format|
+    #     format.html
+    #     format.json {render json: @car_inspection}
+    #   end
+    # end
 
     def new
       @car_inspection =  Registers::CarInspection.new

@@ -123,6 +123,11 @@ module ApplicationHelper
     classes.join(' ')
   end
 
+
+  def button_link_for()
+
+  end
+
   def boolean_badge(boolean)
     if boolean
       content_tag(:span, 'Yes', class: 'badge badge-success')
@@ -138,5 +143,9 @@ module ApplicationHelper
     else
       content_tag(:li, 'No', class: 'badge badge-error')
     end
+  end
+
+  def display_time(time)
+    l(time) if time.present?
   end
  end

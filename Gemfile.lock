@@ -183,6 +183,9 @@ GEM
     nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    paper_trail (15.1.0)
+      activerecord (>= 6.1)
+      request_store (~> 1.4)
     popper_js (2.11.6)
     pry (0.14.2)
       coderay (~> 1.1)
@@ -229,6 +232,8 @@ GEM
     regexp_parser (2.7.0)
     reline (0.3.2)
       io-console (~> 0.5)
+    request_store (1.5.1)
+      rack (>= 1.4)
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -324,6 +329,7 @@ DEPENDENCIES
   mocha
   momentjs-rails
   mysql2 (~> 0.5)
+  paper_trail
   pry
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
