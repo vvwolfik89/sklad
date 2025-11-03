@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   namespace :registers do
     resources :car_inspections, except: :show
   end
+
+  resources :partners do
+    collection { post :import }
+  end
   # Defines the root path route ("/")
   root "departments#index"
 end
