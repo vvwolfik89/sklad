@@ -57,7 +57,7 @@ class PartnersController < ApplicationController
   def destroy
     @partner.destroy
     respond_to do |format|
-      format.html { redirect_to cars_url }
+      format.html { redirect_to partners_url }
       format.json { head :no_content }
     end
   end

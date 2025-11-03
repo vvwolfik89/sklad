@@ -45,7 +45,7 @@
             <% end %>
             <% if can?(:destroy, @permission) %>
 <!--              <div class="col-sm-2">-->
-                <%= link_to("Destroy", permission_path(@permission), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-block") %>
+                <%= link_to("Destroy", permission_path(@permission), data: {turbo_method: :delete, confirm: "Are you sure?"}, class: "btn btn-danger btn-block") %>
 <!--              </div>-->
             <% end %>
           </div>
