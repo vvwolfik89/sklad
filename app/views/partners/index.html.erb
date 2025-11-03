@@ -1,0 +1,45 @@
+<h1><%= I18n.t("partners") %></h1>
+
+<%= form_with url: import_partners_path, local: true, multipart: true do |f| %>
+  <%= f.file_field :file %>
+  <%= f.submit "Импортировать", class: "btn btn-primary" %>
+<% end %>
+
+
+<%= link_to 'New partner', new_partner_path %>
+<div>
+  <div>
+    <table class="table  table-striped">
+      <thead>
+      <tr>
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.name") %></th>-->
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.email") %></th>-->
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.address") %></th>-->
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.phone_number") %></th>-->
+      </tr>
+      </thead>
+      <tbody>
+      <% if @partners %>
+        <% @partners.each do |partner| %>
+          <tr>
+            <td>
+              <a href="<%= partner_path(partner) %>">
+                <h5> <%= partner.name %> </h5>
+              </a>
+            </td>
+            <td>
+              <h5> <%= partner.email %> </h5>
+            </td>
+            <td>
+              <h5> <%= partner.address %> </h5>
+            </td>
+            <td>
+              <h5> <%= partner.phone_number %> </h5>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

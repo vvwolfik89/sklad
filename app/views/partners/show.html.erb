@@ -1,0 +1,24 @@
+<div>
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+<!--        <img src="..." class="img-fluid rounded-start" alt="...">-->
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><%= @partner.name %></h5>
+          <p class="card-text"><%= @partner.description %></p>
+          <p class="card-text"><%= @partner.email %></p>
+          <p class="card-text"><%= @partner.phone_number %></p>
+          <p class="card-text"><%= @partner.address %></p>
+          <p class="card-text"><%= @partner.legal_address %></p>
+          <div class="mb15">
+            <%= link_to("Edit", edit_partner_path(@partner), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, @partner)  %>
+            <%= link_to("Destroy", partner_path(@partner), data: { turbo_method: :delete, turbo_confirm: "Удалить партнера?" }, class: "btn btn-danger btn-block") if can?(:destroy, @partner) %>
+            <%= link_to("All Partners", partners_path, class: "btn btn-block btn-dark pv10 fw600 mb10")%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-12">
+    <%= custom_form_for(@partner, bootstrap3_form_options(html_class: "agent-form")) do |f| %>
+      <div class="bs-component">
+        <div class="tab-pane" id="cars">
+          <div class="row">
+            <% if @partner.errors.present? %>
+              <div class="alert alert-danger">
+                <% @partner.errors.full_messages.each do |msg| %>
+                  <p><%= msg %></p>
+                <% end %>
+              </div>
+            <% end %>
+
+            <%# if can? :set_active, @agent %>
+            <%#= f.input :is_active %>
+            <%# end %>
+
+            <%# if can?(:view_agent_tier, @agent) %>
+            <%#= f.association :roles, collection: Role.all, include_blank: false, multiple: false %>
+            <%# end %>
+
+
+            <%= f.input :name %>
+            <%= f.input :description %>
+            <%= f.input :phone_number %>
+            <%= f.input :email  %>
+            <%= f.input :address %>
+            <%= f.input :legal_address %>
+          </div>
+          <div class="row">
+            <div class="col-sm-offset-3 col-sm-2 p-3">
+              <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
+              <%= link_to("Cancel", partners_path, class: "btn btn-dark btn-block") %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    <% end %>
+  </div>
+</div>
