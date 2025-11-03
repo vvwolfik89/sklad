@@ -93,6 +93,7 @@ ru:
         checking_unitess: Проверка работоспособности системы Unitess
         notes: Примечание
       partner:
+        new_partner: Новый партнер
         name: Название
         description: Описание
         email: Email
