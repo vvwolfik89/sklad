@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_11_03_192327) do
+ActiveRecord::Schema[7.0].define(version: 2025_11_04_211814) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -77,6 +77,41 @@ ActiveRecord::Schema[7.0].define(version: 2025_11_03_192327) do
     t.index ["user_id"], name: "index_departments_users_on_user_id"
   end
 
+  create_table "order_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "type_orders"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "order_logs_partners", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "order_log_id", null: false
+    t.bigint "partner_id", null: false
+    t.index ["order_log_id"], name: "index_order_logs_partners_on_order_log_id"
+    t.index ["partner_id"], name: "index_order_logs_partners_on_partner_id"
+  end
+
+  create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "number"
+    t.json "data_list"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders_partners", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "partner_id", null: false
+    t.index ["order_id"], name: "index_orders_partners_on_order_id"
+    t.index ["partner_id"], name: "index_orders_partners_on_partner_id"
+  end
+
+  create_table "orders_product_types", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "product_type_id", null: false
+    t.bigint "order_id", null: false
+    t.index ["order_id"], name: "index_orders_product_types_on_order_id"
+    t.index ["product_type_id"], name: "index_orders_product_types_on_product_type_id"
+  end
+
   create_table "partners", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -103,6 +138,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_11_03_192327) do
     t.bigint "permission_id", null: false
     t.index ["permission_id"], name: "index_permissions_roles_on_permission_id"
     t.index ["role_id"], name: "index_permissions_roles_on_role_id"
+  end
+
+  create_table "product_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -1,0 +1,30 @@
+<h1><%= I18n.t("product_types") %></h1>
+
+<%= link_to 'New product type', new_product_type_path %>
+<div>
+  <div>
+    <table class="table  table-striped">
+      <thead>
+      <tr>
+        <th scope="col"><%= I18n.t("activerecord.attributes.product_type.name") %></th>
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.email") %></th>-->
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.address") %></th>-->
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.phone_number") %></th>-->
+      </tr>
+      </thead>
+      <tbody>
+      <% if @product_types %>
+        <% @product_types.each do |product_type| %>
+          <tr>
+            <td>
+              <a href="<%= partner_path(product_type) %>">
+                <h5> <%= product_type.name %> </h5>
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

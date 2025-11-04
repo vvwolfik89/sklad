@@ -39,6 +39,8 @@ ru:
   permissions: Разрешения
   registers: Журналы
   partners: Партнеры
+  product_types: Тип продуктов
+  order_logs: Сборки
   activerecord:
     attributes:
       user:
@@ -100,6 +102,9 @@ ru:
         phone_number: Телефонный номер
         address: Адрес
         legal_address: Юридический адрес
+      product_type:
+        name: Наименование
+        new_product_type: Новый тип
 
   date:
     order: ["day", "month", "year"]
