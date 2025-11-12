@@ -1,0 +1,30 @@
+<h1><%= I18n.t("order_logs") %></h1>
+
+<%= link_to "#{I18n.t("activerecord.attributes.order_log.new_order_log")}", new_order_log_path %>
+<div>
+  <div>
+    <table class="table  table-striped">
+      <thead>
+      <tr>
+        <th scope="col"><%= I18n.t("activerecord.attributes.order_log.name") %></th>
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.email") %></th>-->
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.address") %></th>-->
+<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.phone_number") %></th>-->
+      </tr>
+      </thead>
+      <tbody>
+      <% if @order_logs %>
+        <% @order_logs.each do |order_log| %>
+          <tr>
+            <td>
+              <a href="<%= partner_path(order_log) %>">
+                <h5> <%= order_log.name %> </h5>
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+module OrderLogsHelper
+end

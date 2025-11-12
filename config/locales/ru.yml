@@ -105,6 +105,9 @@ ru:
       product_type:
         name: Наименование
         new_product_type: Новый тип
+      order_log:
+        name: Наименование
+        new_order_log: Новая сборка
 
   date:
     order: ["day", "month", "year"]
