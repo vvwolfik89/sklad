@@ -17,11 +17,36 @@
             <%# end %>
 
             <%# if can?(:view_agent_tier, @agent) %>
-            <%#= f.association :roles, collection: Role.all, include_blank: false, multiple: false %>
             <%# end %>
 
 
             <%= f.date_field :date %>
+
+            <h3>Заявки:</h3>
+            <%= f.fields_for :order_details, OrderDetail.new do |d| %>
+              <div class="department-block">
+
+                <%= d.association :partner, collection: Partner.all, include_blank: false, multiple: false %>
+
+                <%= d.label :name, "Название отдела" %>
+                <%#= d.text_field :name %>
+
+<!--                <h4>Сотрудники:</h4>-->
+                <%#= d.fields_for :order_details do |e| %>
+<!--                  <div class="employee-block">-->
+                    <%#= e.label :name, "Имя" %>
+                    <%#= e.text_field :name %>
+
+                    <%#= e.label :position, "Должность" %>
+                    <%#= e.text_field :position %>
+<!--                  </div>-->
+                <%# end %>
+              </div>
+            <% end %>
+
+
+
+
           </div>
           <div class="row">
             <div class="col-sm-offset-3 col-sm-2 p-3">

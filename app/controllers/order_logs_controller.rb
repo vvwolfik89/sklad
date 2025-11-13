@@ -28,10 +28,12 @@ class OrderLogsController < ApplicationController
   end
 
   def create
-    @order_log = OrderLog.new(order_log_params)
+    service = CreateOrderLogService.new(order_log_params)
+    @order_log = service.call
+
 
     respond_to do |format|
-      if @order_log.save
+      if @order_log
         format.html { redirect_to @order_log, notice: 'Permission was successfully created.' }
         format.json { render json: @order_log, status: :created, location: @order_log }
       else
@@ -42,9 +44,11 @@ class OrderLogsController < ApplicationController
   end
 
   def update
+    service = CreateOrderLogService.new(order_log_params)
+    @order_log = service.call
 
     respond_to do |format|
-      if @order_log.update(order_log_params)
+      if @order_log
         format.html { redirect_to @order_log, notice: 'Permission was successfully updated.' }
         format.json { head :no_content }
       else
@@ -66,7 +70,13 @@ class OrderLogsController < ApplicationController
 
   def order_log_params
     permitted_fields = [
-      :name
+      :date,
+      order_details: [
+        :partner_id,
+        {
+          orders: [:number, :type_order_id, data_list: {}]
+        }
+      ]
     ]
 
     params.require(:order_log).permit(permitted_fields)

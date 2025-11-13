@@ -2,6 +2,7 @@ class OrderLog < ApplicationRecord
   validates :date, presence: true , uniqueness: true
 
   has_many :order_details, dependent: :destroy
+  accepts_nested_attributes_for :order_details
   # enum indicator_type: {
   #   all_submissions: 0,
   #   accepted_submissions: 1,
