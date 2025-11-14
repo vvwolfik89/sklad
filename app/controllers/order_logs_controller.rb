@@ -71,10 +71,10 @@ class OrderLogsController < ApplicationController
   def order_log_params
     permitted_fields = [
       :date,
-      order_details: [
+      order_details_attributes: [
         :partner_id,
         {
-          orders: [:number, :type_order_id, data_list: {}]
+          orders_attributes: [:number, :type_order_id, data_list: {}]
         }
       ]
     ]
