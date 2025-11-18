@@ -18,6 +18,8 @@ class OrderLogsController < ApplicationController
   end
 
   def new
+    @order_log = OrderLog.new
+    @order_log.order_details.build
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @order_log }
@@ -72,9 +74,12 @@ class OrderLogsController < ApplicationController
     permitted_fields = [
       :date,
       order_details_attributes: [
+        :id,
         :partner_id,
+        :_destroy,
         {
-          orders_attributes: [:number, :type_order_id, data_list: {}]
+          orders_attributes: [:number, :type_order_id,
+                              :_destroy, data_list: {}]
         }
       ]
     ]

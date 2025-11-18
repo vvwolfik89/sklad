@@ -30,15 +30,52 @@
 
 
                 <%= detail_form.collection_select :partner_id, Partner.all, :id, :name %>
+
+                <div data-order-details-target="detailRow" class="detail-row mb-3">
+                  <%= f.hidden_field :id %>
+                  <%= f.hidden_field :_destroy, value: "false", data: { "order-details-target": "destroyField" } %>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <%= detail_form.fields_for :orders, Order.new do |order_form| %>
+                                      <div class="field">
+                      <%= order_form.label :number %>
+                      <%= order_form.text_field :number %>
+                                      </div>
+                      <% end %>
+                    </div>
+<!--                    <div class="col-md-3">-->
+                      <%#= f.label :quantity %>
+                      <%#= f.number_field :quantity, class: "form-control", min: 1 %>
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+                      <%#= f.label :price %>
+                      <%#= f.number_field :price, class: "form-control", step: 0.01 %>
+<!--                    </div>-->
+                    <div class="col-md-2">
+                      <button type="button" data-action="click->order-details#removeDetail" class="btn btn-danger btn-sm">
+                        ×
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
               </div>
 
-              <%= detail_form.fields_for :orders, Order.new do |order_form| %>
-                <div class="field">
-                  <%= order_form.label :number %>
-                  <%= order_form.text_field :number %>
-                </div>
-              <% end %>
+              <%#= detail_form.fields_for :orders, Order.new do |order_form| %>
+<!--                <div class="field">-->
+                  <%#= order_form.label :number %>
+                  <%#= order_form.text_field :number %>
+<!--                </div>-->
+              <%# end %>
             <% end %>
+
+            <button type="button" data-action="click->order-details#addDetail" class="btn btn-secondary">
+              Добавить деталь заказа
+            </button>
 
 
 
