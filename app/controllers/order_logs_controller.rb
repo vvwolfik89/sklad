@@ -30,35 +30,55 @@ class OrderLogsController < ApplicationController
   end
 
   def create
-    service = CreateOrderLogService.new(order_log_params)
-    @order_log = service.call
+    @order_log = OrderLog.new(order_log_params)
 
-
-    respond_to do |format|
-      if @order_log
-        format.html { redirect_to @order_log, notice: 'Permission was successfully created.' }
-        format.json { render json: @order_log, status: :created, location: @order_log }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @order_log.errors, status: :unprocessable_entity }
-      end
+    if @order_log.save
+      redirect_to @order_log, notice: 'Заказ успешно создан.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
+  # PATCH/PUT /order_logs/1
   def update
-    service = CreateOrderLogService.new(order_log_params)
-    @order_log = service.call
-
-    respond_to do |format|
-      if @order_log
-        format.html { redirect_to @order_log, notice: 'Permission was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @order_log.errors, status: :unprocessable_entity }
-      end
+    if @order_log.update(order_log_params)
+      redirect_to @order_log, notice: 'Заказ успешно обновлён.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
+
+
+  # def create
+  #   service = CreateOrderLogService.new(order_log_params)
+  #   @order_log = service.call
+  #
+  #
+  #   respond_to do |format|
+  #     if @order_log
+  #       format.html { redirect_to @order_log, notice: 'Permission was successfully created.' }
+  #       format.json { render json: @order_log, status: :created, location: @order_log }
+  #     else
+  #       format.html { render action: "new" }
+  #       format.json { render json: @order_log.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+  # def update
+  #   service = CreateOrderLogService.new(order_log_params)
+  #   @order_log = service.call
+  #
+  #   respond_to do |format|
+  #     if @order_log
+  #       format.html { redirect_to @order_log, notice: 'Permission was successfully updated.' }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render action: "edit" }
+  #       format.json { render json: @order_log.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   def destroy
     @order_log.destroy

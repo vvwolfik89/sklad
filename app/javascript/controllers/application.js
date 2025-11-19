@@ -12,7 +12,7 @@ window.Stimulus   = application
 
 // При загрузке страницы (Turbo-friendly)
 document.addEventListener("turbo:load", () => {
-    const addButton = document.getElementById("add-order-detail");
+    const addButton = document.getElementById("add_order_detail");
     if (addButton) {
         addButton.addEventListener("click", (e) => {
             e.preventDefault();
@@ -20,7 +20,6 @@ document.addEventListener("turbo:load", () => {
         });
     }
 });
-
 
 
 

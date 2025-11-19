@@ -6,11 +6,11 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title"><%= @order_log.name %></h5>
+          <h5 class="card-title"><%= @order_log.date %></h5>
           <div class="mb15">
-            <%= link_to("Edit", edit_product_type_path(@order_log), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, @order_log)  %>
-            <%= link_to("Destroy", product_type_path(@order_log), data: { turbo_method: :delete, turbo_confirm: "Удалить партнера?" }, class: "btn btn-danger btn-block") if can?(:destroy, @order_log) %>
-            <%= link_to("All Product Type", product_types_path, class: "btn btn-block btn-dark pv10 fw600 mb10")%>
+            <%= link_to("Edit", edit_order_log_path(@order_log), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, @order_log)  %>
+            <%= link_to("Destroy", order_log_path(@order_log), data: { turbo_method: :delete, turbo_confirm: "Удалить партнера?" }, class: "btn btn-danger btn-block") if can?(:destroy, @order_log) %>
+            <%= link_to("All Product Type", order_logs_path, class: "btn btn-block btn-dark pv10 fw600 mb10")%>
           </div>
         </div>
       </div>

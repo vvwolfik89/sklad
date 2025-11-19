@@ -17,7 +17,7 @@
         <% @order_logs.each do |order_log| %>
           <tr>
             <td>
-              <a href="<%= partner_path(order_log) %>">
+              <a href="<%= order_log_path(order_log) %>">
                 <h5> <%= order_log.date %> </h5>
               </a>
             </td>

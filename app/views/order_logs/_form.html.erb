@@ -1,84 +1,67 @@
+<%#= link_to "➕ Добавить заказ", "#", id: "add_order_detail", class: "btn btn-success btn-block" %>
+
+<!--<div class="row">-->
+<!--  <div class="col-md-12">-->
+<%#= custom_form_for(@order_log, bootstrap3_form_options(html_class: "agent-form")) do |f| %>
+<!--      <div class="bs-component">-->
+<!--        <div class="tab-pane" id="cars">-->
+<!--          <div class="row">-->
+<%# if @order_log.errors.present? %>
+<!--              <div class="alert alert-danger">-->
+<%# @order_log.errors.full_messages.each do |msg| %>
+<!--                  <p><%#= msg %></p>-->
+<%# end %>
+<!--              </div>-->
+<%# end %>
+<%#= f.date_field :date %>
+<!--            <h3>Заявки:</h3>-->
+<!--            <div id="order_details">-->
+<%#= f.fields_for :order_details do |detail_form| %>
+<%#= render 'order_detail_fields', detail_form: detail_form %>
+<%# end %>
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row">-->
+<!--            <div class="col-sm-offset-3 col-sm-3 p-3">-->
+<%#= f.button :submit, "Save", class: "btn-primary btn-block" %>
+<%#= link_to("Cancel", order_logs_path, class: "btn btn-dark btn-block") %>
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<%# end %>
+<!--  </div>-->
+<!--</div>-->
+
 <div class="row">
   <div class="col-md-12">
-    <%= custom_form_for(@order_log, bootstrap3_form_options(html_class: "agent-form")) do |f| %>
-      <div class="bs-component">
-        <div class="tab-pane" id="cars">
-          <div class="row">
-            <% if @order_log.errors.present? %>
-              <div class="alert alert-danger">
-                <% @order_log.errors.full_messages.each do |msg| %>
-                  <p><%= msg %></p>
-                <% end %>
-              </div>
-            <% end %>
+<%= custom_form_for(@order_log, bootstrap3_form_options(html_class: "agent-form")) do |form| %>
+<%#= form_with(model: @order_log, local: true) do |form| %>
+  <%= form.date_field :date %>
 
-            <%# if can? :set_active, @agent %>
-            <%#= f.input :is_active %>
-            <%# end %>
-
-            <%# if can?(:view_agent_tier, @agent) %>
-            <%# end %>
-
-
-            <%= f.date_field :date %>
-
-            <h3>Заявки:</h3>
-
-            <div id="order-details-container">
-              <%= f.fields_for :order_details do |detail_form| %>
-                <%= render 'order_detail_fields', detail_form: detail_form %>
-              <% end %>
-            </div>
-
-            <!-- Шаблон для новых полей -->
-            <template id="order-detail-template">
-              <%= fields_for :order_details, OrderDetail.new, child_index: "new_order_details" do |f| %>
-                <%= render 'order_detail_fields', detail_form: f %>
-              <% end %>
-            </template>
-
-            <br>
-            <%= link_to "➕ Добавить позицию", "#",
-                        id: "add-order-detail",
-                        style: "color: blue; font-weight: bold; text-decoration: none;" %>
-
-            <br><br>
-
-
-
-
-
-            <%#= f.fields_for :order_details, OrderDetail.new do |detail_form| %>
-<!--              <div class="field">-->
-                <%#= detail_form.label :detail_name %>
-                <%#= detail_form.text_field :detail_name %>
-
-
-                <%#= detail_form.collection_select :partner_id, Partner.all, :id, :name %>
-<!--              </div>-->
-
-              <%#= detail_form.fields_for :orders, Order.new do |order_form| %>
-<!--                <div class="field">-->
-                  <%#= order_form.label :number %>
-                  <%#= order_form.text_field :number %>
-<!--                </div>-->
-              <%# end %>
-            <%# end %>
-
-
-
-
-          </div>
-          <div class="row">
-            <div class="col-sm-offset-3 col-sm-2 p-3">
-              <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
-              <%= link_to("Cancel", order_logs_path, class: "btn btn-dark btn-block") %>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
+  <h3>Детали заказа</h3>
+  <div id="order_details">
+    <%= form.fields_for :order_details do |detail_form| %>
+      <%= render "order_detail_fields", f: detail_form %>
     <% end %>
+  </div>
+
+  <button type="button" onclick="removeOrderDetail(event)" id="add_order_detail">Добавить заказ</button>
+  <!-- Шаблон для одного поля детали заказа -->
+  <%= content_tag :div, id: "new_order_detail_template", style: "display: none;" do %>
+    <%= form.fields_for :order_details, OrderDetail.new, child_index: "NEW_RECORD" do |f| %>
+      <%= render "order_detail_fields", f: f %>
+    <% end %>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-3 p-3">
+      <%= form.submit "Save", class: "btn-primary btn-block" %>
+      <%= link_to("Cancel", order_logs_path, class: "btn btn-dark btn-block") %>
+    </div>
+  </div>
+
+<% end %>
+
   </div>
 </div>
