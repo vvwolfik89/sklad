@@ -38,36 +38,37 @@
 
 // Функция добавления новой строки order_detail
 export function addOrderDetail() {
-    // const addButton = document.getElementById('add_order_detail');
     const container = document.getElementById('order_details');
     const template = document.getElementById('new_order_detail_template');
-    // addButton.addEventListener('click', function() {
     // Получаем HTML шаблона
     let newFields = template.innerHTML.replace(/NEW_RECORD/g, new Date().getTime());
     // Создаём новый div и добавляем поля
     const newDetail = document.createElement('div');
     newDetail.innerHTML = newFields;
-    debugger
     container.appendChild(newDetail);
-    // });
 }
 //
 // // Функция удаления строки
 export function removeOrderDetail(event) {
-    debugger
-    const container = document.getElementById('order_details');
-    container.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (e.target.classList.contains('remove_order_detail')) {
-            const wrapper = e.target.closest('.order_detail');
+    const target = event.target;
 
-            const destroyInput = wrapper.querySelector("input[name*='_destroy']");
-            if (destroyInput) {
-                destroyInput.value = "1";
-            }
-            wrapper.style.display = "none"; // скрываем
+    // Проверяем, нажата ли кнопка удаления
+    if (target.classList.contains('remove_order_detail')) {
+        event.preventDefault();
+
+        // Находим родительский блок детали заказа
+        const wrapper = target.closest('.order_detail');
+        if (!wrapper) return;
+
+        // Отмечаем для удаления (если есть скрытое поле)
+        const destroyInput = wrapper.querySelector("input[name*='_destroy']");
+        if (destroyInput) {
+            destroyInput.value = "1";
         }
-    });
+
+        // Скрываем элемент
+        wrapper.style.display = "none";
+    }
 }
 
 

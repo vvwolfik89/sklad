@@ -19,6 +19,19 @@ document.addEventListener("turbo:load", () => {
             addOrderDetail();
         });
     }
+
+    const container = document.getElementById('order_details');
+
+    if (!container) {
+        console.error('Контейнер order_details не найден');
+        return;
+    }
+
+    // Обработчик для всех кликов по контейнеру
+    container.addEventListener('click', function(event) {
+        event.preventDefault();
+        removeOrderDetail(event);
+    });
 });
 
 

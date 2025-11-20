@@ -1,29 +1,11 @@
-<!--<div class="nested-fields" style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">-->
-  <%#= detail_form.collection_select :partner_id, Partner.all, :id, :name %>
-
-  <%# if detail_form.object.persisted? %>
-    <%#= detail_form.hidden_field :_destroy %>
-    <%#= link_to "Удалить", "#", onclick: "removeOrderDetail(event)", class: "btn btn-danger btn-block" %>
-  <%# else %>
-    <%#= link_to "Удалить", "#", onclick: "removeOrderDetail(event)", class: "btn btn-danger btn-block" %>
-  <%# end %>
-<!--</div>-->
-
-
-<div class="order_detail">
-  <%= f.collection_select :partner_id, Partner.all, :id, :name %>
-  <%#= f.hidden_field :_destroy %>
-  <%#= link_to "Удалить", "#", class: "remove_order_detail" %>
-
-
-  <% if f.object.persisted? %>
-  <%= f.hidden_field :_destroy %>
-  <%= link_to "Удалить", "#", onclick: "removeOrderDetail(event)", class: "btn btn-danger btn-block remove_order_detail" %>
-  <% else %>
-  <%= link_to "Удалить", "#", onclick: "removeOrderDetail(event)", class: "btn btn-danger btn-block remove_order_detail" %>
-  <% end %>
-
-
-
-
+<div class="row p-1">
+  <div class="order_detail">
+    <%= f.collection_select :partner_id, Partner.all, :id, :name %>
+    <% if f.object.persisted? %>
+      <%= f.hidden_field :_destroy %>
+      <%= link_to "Удалить", "#", class: "btn btn-danger btn-block remove_order_detail" %>
+    <% else %>
+      <%= link_to "Удалить", "#", class: "btn btn-danger btn-block remove_order_detail" %>
+    <% end %>
+  </div>
 </div>
