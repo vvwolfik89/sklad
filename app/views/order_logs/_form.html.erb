@@ -12,7 +12,7 @@
 
       <%= form.date_field :date %>
 
-      <h3>Детали заказа</h3>
+      <h3>Заказы</h3>
       <div id="order_details">
         <%= form.fields_for :order_details do |detail_form| %>
           <%= render "order_detail_fields", f: detail_form %>
