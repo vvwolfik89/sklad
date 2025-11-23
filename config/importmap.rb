@@ -19,4 +19,3 @@ pin "main", to: "template/main.js"
 pin "select2_bootstrap", to: "select2_bootstrap.js"
 pin "templatejs"
 pin "application"
-pin "order_details", preload: true

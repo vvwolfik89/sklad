@@ -1,11 +1,7 @@
 <div class="row p-1">
   <div class="order_detail">
     <%= f.collection_select :partner_id, Partner.all, :id, :name %>
-    <% if f.object.persisted? %>
       <%= f.hidden_field :_destroy %>
-      <%= link_to "Удалить", "#", class: "btn btn-danger btn-block remove_order_detail" %>
-    <% else %>
-      <%= link_to "Удалить", "#", class: "btn btn-danger btn-block remove_order_detail" %>
-    <% end %>
+      <%= link_to "Удалить", "#",  data: { action: "click->order-details#remove"}, class: "btn btn-danger btn-block remove_order_detail " %>
   </div>
 </div>

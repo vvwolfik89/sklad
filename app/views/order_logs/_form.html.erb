@@ -1,41 +1,36 @@
-<div class="row">
-  <div class="col-md-12">
-    <%= custom_form_for(@order_log, bootstrap3_form_options(html_class: "agent-form")) do |form| %>
+<div data-controller="order-details">
+  <%= custom_form_for(@order_log, bootstrap3_form_options(html_class: "agent-form")) do |form| %>
 
-      <% if @order_log.errors.present? %>
-        <div class="alert alert-danger">
-          <% @order_log.errors.full_messages.each do |msg| %>
-            <p><%= msg %></p>
-          <% end %>
-        </div>
-      <% end %>
-
-      <%= form.date_field :date %>
-
-      <h3>Заказы</h3>
-      <div id="order_details">
-        <%= form.fields_for :order_details do |detail_form| %>
-          <%= render "order_detail_fields", f: detail_form %>
+    <% if @order_log.errors.present? %>
+      <div class="alert alert-danger">
+        <% @order_log.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
         <% end %>
       </div>
-
-      <!--  <button type="button" id="add_order_detail">Добавить заказ</button>-->
-      <%= link_to "➕ Добавить заказ", "#", id: "add_order_detail", class: "btn btn-success btn-block" %>
-      <!-- Шаблон для одного поля детали заказа -->
-      <%= content_tag :div, id: "new_order_detail_template", style: "display: none;" do %>
-        <%= form.fields_for :order_details, OrderDetail.new, child_index: "NEW_RECORD" do |f| %>
-          <%= render "order_detail_fields", f: f %>
-        <% end %>
-      <% end %>
-
-      <div class="row">
-        <div class="col-sm-offset-3 col-sm-3 p-3">
-          <%= form.submit "Save", class: "btn btn-primary btn-block" %>
-          <%= link_to("Cancel", order_logs_path, class: "btn btn-dark btn-block") %>
-        </div>
-      </div>
-
     <% end %>
+    <%= form.date_field :date %>
+    <!-- ... поля заказа ... -->
 
-  </div>
+    <div data-order-details-target="container">
+      <h3>Заказы</h3>
+      <%= form.fields_for :order_details do |f| %>
+        <%= render 'order_detail_fields', f: f %>
+      <% end %>
+    </div>
+
+    <template data-order-details-target="template">
+      <%= form.fields_for :order_details, OrderDetail.new, child_index: "new_order_details" do |f| %>
+        <%= render 'order_detail_fields', f: f %>
+      <% end %>
+    </template>
+
+    <%= link_to "➕ Добавить заказ", "#", data: { action: "click->order-details#add" }, class: "btn btn-success btn-block" %>
+
+    <div class="row">
+      <div class="col-sm-offset-3 col-sm-3 p-3">
+        <%= form.submit "Save", class: "btn btn-primary btn-block" %>
+        <%= link_to("Cancel", order_logs_path, class: "btn btn-dark btn-block") %>
+      </div>
+    </div>
+  <% end %>
 </div>
