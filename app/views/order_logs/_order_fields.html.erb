@@ -1,0 +1,12 @@
+<div class="row p-1">
+  <div class="order">
+    <%= f.input :number %>
+    <div class="field">
+      <%= f.label "Типы продуктов" %>
+      <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false },
+          { multiple: true, class: "form-select" } %>
+    </div>
+    <%= f.hidden_field :_destroy %>
+    <%= link_to "Удалить заявку", "#",  data: { action: "click->orders#remove"}, class: "btn btn-danger btn-block remove_order " %>
+  </div>
+</div>

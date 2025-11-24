@@ -19,7 +19,8 @@ class OrderLogsController < ApplicationController
 
   def new
     @order_log = OrderLog.new
-    @order_log.order_details.build
+    order_detail = @order_log.order_details.build
+    order_detail.orders.build
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @order_log }
@@ -98,7 +99,7 @@ class OrderLogsController < ApplicationController
         :partner_id,
         :_destroy,
         {
-          orders_attributes: [:number, :type_order_id,
+          orders_attributes: [:id, :number, { product_type_ids: []},
                               :_destroy, data_list: {}]
         }
       ]
