@@ -1,6 +1,10 @@
 <div class="row p-1">
   <div class="order">
     <%= f.input :number %>
+    <%#= f.collection_select :lists, [1..10],  { include_blank: false } %>
+    <%= f.collection_select :lists, (1..10).to_a, :to_i, :to_s,
+                               { prompt: "Выберите количество" },
+                               { class: "form-select" } %>
     <div class="field">
       <%= f.label "Типы продуктов" %>
       <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false },

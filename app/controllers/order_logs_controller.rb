@@ -99,7 +99,7 @@ class OrderLogsController < ApplicationController
         :partner_id,
         :_destroy,
         {
-          orders_attributes: [:id, :number, { product_type_ids: []},
+          orders_attributes: [:id, :number, :lists, { product_type_ids: []},
                               :_destroy, data_list: {}]
         }
       ]
