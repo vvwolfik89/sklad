@@ -2,13 +2,13 @@
   <div class="order_detail">
     <%= f.collection_select :partner_id, Partner.all, :id, :name %>
     <div>
-      <div data-order-target="container">
+      <div data-order_controller_!.js-target="container">
         <h3>Заявки</h3>
         <%= f.fields_for :orders do |f| %>
           <%= render 'order_fields', f: f %>
         <% end %>
       </div>
-      <template data-order-target="template">
+      <template data-order_controller_!.js-target="template">
         <%= f.fields_for :orders, Order.new, child_index: "new_orders" do |f| %>
           <%= render 'order_fields', f: f %>
         <% end %>

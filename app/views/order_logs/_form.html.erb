@@ -1,4 +1,4 @@
-<div data-controller="order-details">
+<div data-controller="order_details_controller_1.js">
   <%= custom_form_for(@order_log, bootstrap3_form_options(html_class: "agent-form")) do |form| %>
 
     <% if @order_log.errors.present? %>
@@ -11,14 +11,14 @@
     <%= form.date_field :date %>
     <!-- ... поля заказа ... -->
 
-    <div data-order-details-target="container">
+    <div data-order_details_controller_1.js-target="container">
       <h3>Заказы</h3>
       <%= form.fields_for :order_details do |f| %>
         <%= render 'order_detail_fields', f: f %>
       <% end %>
     </div>
 
-    <template data-order-details-target="template">
+    <template data-order_details_controller_1.js-target="template">
       <%= form.fields_for :order_details, OrderDetail.new, child_index: "new_order_details" do |f| %>
         <%= render 'order_detail_fields', f: f %>
       <% end %>

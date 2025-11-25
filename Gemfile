@@ -11,7 +11,9 @@ gem "sprockets-rails"
 
 gem 'bootstrap', '>= 5.2.3'
 
-gem 'cancancan'
+gem 'concurrent-ruby', '1.3.4'
+
+gem 'cancancan', '>= 3.6.1'
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
 
@@ -21,7 +23,7 @@ gem "puma", "~> 5.0"
 gem 'paper_trail'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
+gem "importmap-rails", ">= 2.1"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
@@ -82,7 +84,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
+  gem "webdrivers", "= 5.3.0"
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem "minitest-rails"
