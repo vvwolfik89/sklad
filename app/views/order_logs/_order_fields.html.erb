@@ -1,16 +1,24 @@
 <div class="row p-1">
   <div class="order">
-    <%= f.input :number %>
-    <%#= f.collection_select :lists, [1..10],  { include_blank: false } %>
-    <%= f.collection_select :lists, (1..10).to_a, :to_i, :to_s,
-                               { prompt: "Выберите количество" },
-                               { class: "form-select" } %>
-    <div class="field">
-      <%= f.label "Типы продуктов" %>
-      <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false },
-          { multiple: true, class: "form-select" } %>
+    <%#= f.input :number %>
+<%#= f.collection_select :lists, (1..10).to_a, :to_i, :to_s, { prompt: "Выберите количество листов" }, { class: "form-select" } %>
+    <div data-controller="dynamic-fields">
+      <%= f.label :lists, "Количество позиций" %>
+      <%= f.collection_select :lists, (1..10).to_a, :to_i, :to_s,
+                              { prompt: "Выберите количество" },
+                              { data: { action: "change->dynamic-fields#updateFields" } } %>
+      <div data-dynamic-fields-target="container"></div>
     </div>
-    <%= f.hidden_field :_destroy %>
-    <%= link_to "Удалить заявку", "#",  data: { action: "click->orders#remove"}, class: "btn btn-danger btn-block remove_order " %>
+
+
+
+
+    <!--    <div class="field">-->
+    <%#= f.label "Типы продуктов" %>
+    <%#= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "form-select" } %>
+    <!--    </div>-->
+    <%#= f.hidden_field :_destroy %>
+    <%#= link_to "Удалить заявку", "#",  data: { action: "click->orders#remove"}, class: "btn btn-danger btn-block remove_order " %>
   </div>
 </div>
+<!--{ prompt: "Выберите типы товаров аптечного ассортимента" },-->
