@@ -1,23 +1,34 @@
-<div class="row p-1">
-  <div class="order_detail">
-    <%= f.collection_select :partner_id, Partner.all, :id, :name %>
-    <div>
-      <div data-order-target="container">
-        <h3>Заявки</h3>
-        <%= f.fields_for :orders do |f| %>
-          <%= render 'order_fields', f: f %>
-        <% end %>
-      </div>
-      <template data-order-target="template">
-        <%= f.fields_for :orders, Order.new, child_index: "new_orders" do |f| %>
-          <%= render 'order_fields', f: f %>
-        <% end %>
-      </template>
-      <%= link_to "➕ Добавить заявку", "#", data: { action: "click->order-details#add" }, class: "btn btn-success btn-block" %>
-    </div>
+<div class="order-detail border p-3 mb-3" data-order-detail-id="<%= f.object.persisted? ? f.object.id : 'NEW_ORDER_DETAIL' %>">
+  <%= f.hidden_field :id %>
+  <%= f.hidden_field :_destroy %>
 
-
-    <%= f.hidden_field :_destroy %>
-    <%= link_to "Удалить", "#", data: { action: "click->order-details#remove" }, class: "btn btn-danger btn-block remove_order_detail " %>
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5>Детали заказа</h5>
+    <button type="button"
+            data-action="click->order-log-form#removeOrderDetail"
+            data-order-detail-target="removeButton"
+            class="btn btn-sm btn-danger">×</button>
   </div>
+
+  <%#= f.label :partner_id, "ID партнёра" %>
+  <%#= f.number_field :partner_id, class: "form-control mb-2", required: true %>
+
+  <%= f.label :partner_id, "Выберите контрагента" %>
+  <%= f.collection_select :partner_id, Partner.all, :id, :name, { class: "form-control mb-2" } %>
+
+  <!-- Контейнер для Orders -->
+  <div data-order-detail-target="ordersContainer">
+    <%= f.fields_for :orders do |order_form| %>
+      <%= render "order_fields", f: order_form %>
+    <% end %>
+  </div>
+
+  <!-- Кнопка добавления Order -->
+  <button type="button"
+          data-action="click->order-log-form#addOrder"
+          data-order-detail-target="addOrderButton"
+          class="btn btn-sm btn-success">
+    Добавить заказ
+  </button>
+
 </div>

@@ -1,36 +1,29 @@
-<div data-controller="order-details">
-  <%= custom_form_for(@order_log, bootstrap3_form_options(html_class: "agent-form")) do |form| %>
+<%= form_with(model: @order_log, local: true) do |f| %>
+  <div data-controller="order-log-form">
+    <%= f.label :date, "Дата журнала" %>
+    <%= f.date_field :date, required: true %>
 
-    <% if @order_log.errors.present? %>
-      <div class="alert alert-danger">
-        <% @order_log.errors.full_messages.each do |msg| %>
-          <p><%= msg %></p>
-        <% end %>
-      </div>
-    <% end %>
-    <%= form.date_field :date %>
-    <!-- ... поля заказа ... -->
-
-    <div data-order-details-target="container">
-      <h3>Заказы</h3>
-      <%= form.fields_for :order_details do |f| %>
-        <%= render 'order_detail_fields', f: f %>
+    <div data-order-log-form-target="orderDetailsContainer">
+      <!-- Рендерим все order_details через fields_for -->
+      <%= f.fields_for :order_details do |ff| %>
+        <%= render "order_detail_fields", f: ff %>
       <% end %>
     </div>
 
-    <template data-order-details-target="template">
-      <%= form.fields_for :order_details, OrderDetail.new, child_index: "new_order_details" do |f| %>
-        <%= render 'order_detail_fields', f: f %>
+    <button type="button"
+            data-action="click->order-log-form#addOrderDetail"
+            class="btn btn-secondary mt-2">
+      Добавить детали заказа
+    </button>
+
+    <%= f.submit class: "btn btn-primary mt-3" %>
+    <!-- Шаблон для нового OrderDetail -->
+    <template data-order-log-form-target="orderDetailTemplate">
+      <%= fields_for :order_details, OrderDetail.new, child_index: "NEW_ORDER_DETAIL" do |ff| %>
+        <%= render "order_detail_fields", f: ff %>
       <% end %>
     </template>
+  </div>
+<% end %>
 
-    <%= link_to "➕ Добавить заказ", "#", data: { action: "click->order-details#add" }, class: "btn btn-success btn-block" %>
 
-    <div class="row">
-      <div class="col-sm-offset-3 col-sm-3 p-3">
-        <%= form.submit "Save", class: "btn btn-primary btn-block" %>
-        <%= link_to("Cancel", order_logs_path, class: "btn btn-dark btn-block") %>
-      </div>
-    </div>
-  <% end %>
-</div>
