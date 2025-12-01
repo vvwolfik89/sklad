@@ -10,10 +10,11 @@
   </div>
 
   <%= f.label :product_type_ids, "Типы продуктов (через запятую)" %>
-  <%= f.text_field :product_type_ids,
-                   value: f.object.product_type_ids.join(","),
-                   class: "form-control mb-1",
-                   placeholder: "1,2,3" %>
+<!--  <%= f.text_field :product_type_ids,
+                  value: f.object.product_type_ids.join(","),
+                  class: "form-control mb-1",
+                   placeholder: "1,2,3" %>-->
+  <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "form-select" } %>
 
   <%= f.label :lists, "Количество позиций" %>
   <%= f.collection_select :lists, (1..10).to_a, :to_i, :to_s,
