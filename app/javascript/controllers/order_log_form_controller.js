@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { initializeSelect2 } from "../select2_bootstrap"; // Импортируем функцию
 
 export default class extends Controller {
     static targets = [
@@ -73,6 +74,8 @@ export default class extends Controller {
 
         // Вставляем в DOM
         ordersContainer.appendChild(template);
+
+        initializeSelect2()
     }
 
 // Вспомогательный метод для генерации ID

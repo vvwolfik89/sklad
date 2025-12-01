@@ -1,29 +1,28 @@
-<div class="order border p-2 mb-2" data-order-id="<%= f.object.persisted? ? f.object.id : 'NEW_ORDER' %>">
-  <%= f.hidden_field :id %>
-  <%= f.hidden_field :_destroy %>
+<!--<turbo-frame id="order_form">-->
+  <div class="order border p-2 mb-2" data-order-id="<%= f.object.persisted? ? f.object.id : 'NEW_ORDER' %>">
+    <%= f.hidden_field :id %>
+    <%= f.hidden_field :_destroy %>
 
 
-  <div class="d-flex justify-content-end mb-1">
-    <button type="button"
-            data-action="click->order-log-form#removeOrder"
-            class="btn btn-sm btn-outline-danger">×</button>
+    <div class="d-flex justify-content-end mb-1">
+      <button type="button"
+              data-action="click->order-log-form#removeOrder"
+              class="btn btn-sm btn-outline-danger">×</button>
+    </div>
+
+    <%= f.label :product_type_ids, "Типы продуктов (через запятую)" %>
+    <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "w-100 select2-auto" } %>
+
+    <%= f.label :lists, "Количество позиций" %>
+    <%= f.collection_select :lists, (1..10).to_a, :to_i, :to_s,
+                            { prompt: "Выберите количество" },
+                            { data: { action: "change->dynamic-fields#updateFields" }, class: "form-control mb-1" } %>
+
+    <%= f.label :data_lists, "Дополнительные данные (JSON)" %>
+    <%= f.text_area :data_list,
+                    value: JSON.pretty_generate(f.object.data_list),
+                    class: "form-control",
+                    rows: 2 %>
   </div>
 
-  <%= f.label :product_type_ids, "Типы продуктов (через запятую)" %>
-<!--  <%= f.text_field :product_type_ids,
-                  value: f.object.product_type_ids.join(","),
-                  class: "form-control mb-1",
-                   placeholder: "1,2,3" %>-->
-  <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "form-select" } %>
-
-  <%= f.label :lists, "Количество позиций" %>
-  <%= f.collection_select :lists, (1..10).to_a, :to_i, :to_s,
-                          { prompt: "Выберите количество" },
-                          { data: { action: "change->dynamic-fields#updateFields" }, class: "form-control mb-1" } %>
-
-  <%= f.label :data_lists, "Дополнительные данные (JSON)" %>
-  <%= f.text_area :data_list,
-                  value: JSON.pretty_generate(f.object.data_list),
-                  class: "form-control",
-                  rows: 2 %>
-</div>
+<!--</turbo-frame>-->

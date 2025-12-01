@@ -3,18 +3,18 @@
   <%= f.hidden_field :_destroy %>
 
   <div class="d-flex justify-content-between align-items-center mb-2">
-    <h5>Детали заказа</h5>
+    <h5>Заказ</h5>
     <button type="button"
             data-action="click->order-log-form#removeOrderDetail"
             data-order-detail-target="removeButton"
             class="btn btn-sm btn-danger">×</button>
   </div>
 
-  <%#= f.label :partner_id, "ID партнёра" %>
-  <%#= f.number_field :partner_id, class: "form-control mb-2", required: true %>
+  <div class="mb-2">
+    <%= f.label :partner_id, "Выберите контрагента" %>
+    <%= f.collection_select :partner_id, Partner.all, :id, :name,  { include_blank: false }, { class: "select2" } %>
+  </div>
 
-  <%= f.label :partner_id, "Выберите контрагента" %>
-  <%= f.collection_select :partner_id, Partner.all, :id, :name, { class: "form-control mb-2" } %>
 
   <!-- Контейнер для Orders -->
   <div data-order-detail-target="ordersContainer">
