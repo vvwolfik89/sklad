@@ -23,6 +23,13 @@
     <% end %>
   </div>
 
+  <!-- 🔥 Шаблон для новых заказов — генерируется ВНУТРИ order_detail -->
+  <template data-order-detail-target="orderTemplate">
+    <%= f.fields_for :orders, Order.new, child_index: "NEW_ORDER" do |order_form| %>
+      <%= render "order_fields", f: order_form %>
+    <% end %>
+  </template>
+
   <!-- Кнопка добавления Order -->
   <button type="button"
           data-action="click->order-log-form#addOrder"

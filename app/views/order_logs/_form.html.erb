@@ -1,4 +1,12 @@
 <%= form_with(model: @order_log, local: true) do |f| %>
+  <% if @order_log.errors.present? %>
+    <div class="alert alert-danger">
+      <% @order_log.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
   <div data-controller="order-log-form">
     <%= f.label :date, "Дата журнала" %>
     <%= f.date_field :date, required: true %>
@@ -19,45 +27,11 @@
     <%= f.submit class: "btn btn-primary mt-3" %>
     <!-- Шаблон для нового OrderDetail -->
     <template data-order-log-form-target="orderDetailTemplate">
-      <%= fields_for :order_details, OrderDetail.new, child_index: "NEW_ORDER_DETAIL" do |ff| %>
+      <%= f.fields_for :order_details, OrderDetail.new, child_index: "NEW_ORDER_DETAIL" do |ff| %>
         <%= render "order_detail_fields", f: ff %>
       <% end %>
     </template>
 
-    <!-- Шаблон для нового Order -->
-
-    <template data-order-log-form-target="orderTemplate">
-      <%= fields_for :orders, Order.new, child_index: "NEW_ORDER_DETAIL" do |ff| %>
-        <%= render "order_fields", f: ff %>
-      <% end %>
-    </template>
-
-<!--    <template data-order-log-form-target="orderTemplate">-->
-<!--      <div class="order border p-2 mb-2" data-order-id="NEW_ORDER">-->
-<!--        <input type="hidden" name="order_log[order_details][NEW_ORDER_DETAIL][orders][NEW_ORDER][id]" />-->
-<!--        <input type="hidden" name="order_log[order_details][NEW_ORDER_DETAIL][orders][NEW_ORDER][_destroy]" value="false" />-->
-
-
-<!--        <div class="d-flex justify-content-end mb-1">-->
-<!--          <button type="button"-->
-<!--                  data-action="click->order-log-form#removeOrder"-->
-<!--                  class="btn btn-sm btn-outline-danger">×</button>-->
-<!--        </div>-->
-
-
-<!--        <label>Типы продуктов (через запятую)</label>-->
-<!--        <input type="text"-->
-<!--               name="order_log[order_details][NEW_ORDER_DETAIL][orders][NEW_ORDER][product_type_ids]"-->
-<!--               class="form-control mb-1"-->
-<!--               placeholder="1,2,3" />-->
-        <%#= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "form-select" } %>
-
-<!--        <label>Дополнительные данные (JSON)</label>-->
-<!--        <textarea name="order_log[order_details][NEW_ORDER_DETAIL][orders][NEW_ORDER][data_lists]"-->
-<!--                  class="form-control"-->
-<!--                  rows="2"></textarea>-->
-<!--      </div>-->
-<!--    </template>-->
   </div>
 <% end %>
 

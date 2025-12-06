@@ -12,16 +12,33 @@ export default class extends Controller {
 
     // Добавление нового OrderDetail
     addOrderDetail() {
-        console.log("addOrderDetail вызван");
         const template = this.orderDetailTemplateTarget.content.cloneNode(true);
-        const newId = this._generateId();
+        const container = this.orderDetailsContainerTarget;
 
-        // Заменяем плейсхолдер на уникальный ID
-        template.querySelectorAll("[data-order-detail-id]").forEach(el => {
-            el.dataset.orderDetailId = newId;
+        // Получаем индекс
+        const detailIndex = container.querySelectorAll('.order-detail:not([style*="display: none"])').length;
+
+        // 🔁 Заменяем NEW_ORDER_DETAIL ВЕЗДЕ: в полях и в шаблонах
+        template.querySelectorAll("[name], [data-order-detail-target='orderTemplate'] [name]").forEach(el => {
+            if (el.hasAttribute("name")) {
+                const name = el.getAttribute("name").replace(/NEW_ORDER_DETAIL/g, detailIndex);
+                el.setAttribute("name", name);
+            }
         });
 
-        this.orderDetailsContainerTarget.appendChild(template);
+        // Или проще — обработать весь innerHTML
+        const tempDiv = document.createElement('div');
+        tempDiv.appendChild(template);
+        tempDiv.innerHTML = tempDiv.innerHTML.replace(/NEW_ORDER_DETAIL/g, detailIndex);
+
+        const newDetail = tempDiv.firstElementChild;
+
+        // Сохраняем индекс
+        newDetail.dataset.orderDetailIndex = detailIndex;
+        newDetail.dataset.orderDetailId = this._generateId();
+
+        container.appendChild(newDetail);
+        initializeSelect2();
     }
 
     // Удаление OrderDetail
@@ -37,45 +54,33 @@ export default class extends Controller {
 
     // Добавление Order внутри OrderDetail
     addOrder(event) {
-        const button = event.currentTarget;
-        const orderDetail = button.closest(".order-detail");
-        const ordersContainer = orderDetail.querySelector(
-            '[data-order-detail-target="ordersContainer"]'
-        );
+        const orderDetail = event.currentTarget.closest(".order-detail");
 
-        if (!ordersContainer) {
-            console.error("Container для заказов не найден!");
+        // 🔎 Ищем шаблон ВНУТРИ этого order_detail
+        const orderTemplate = orderDetail.querySelector('[data-order-detail-target="orderTemplate"]');
+
+        if (!orderTemplate) {
+            console.error("Шаблон orderTemplate не найден внутри order_detail");
             return;
         }
 
-        // Получаем ID родительского OrderDetail
-        const detailId = orderDetail.dataset.orderDetailId || "NEW_ORDER_DETAIL";
+        const ordersContainer = orderDetail.querySelector('[data-order-detail-target="ordersContainer"]');
+        const orderIndex = ordersContainer.querySelectorAll('.order:not([style*="display: none"])').length;
 
-        // Генерируем уникальный ID для нового Order
-        const orderId = this._generateId();
+        // Клонируем
+        const template = orderTemplate.content.cloneNode(true);
 
-        // Клонируем шаблон
-        const template = this.orderTemplateTarget.content.cloneNode(true);
-
-        // Заменяем плейсхолдеры на реальные ID
-        template.querySelectorAll("[name], [data-order-id]").forEach(element => {
-            if (element.hasAttribute("name")) {
-                element.setAttribute(
-                    "name",
-                    element.getAttribute("name")
-                        .replace(/NEW_ORDER_DETAIL/g, detailId)
-                        .replace(/NEW_ORDER/g, orderId)
-                );
-            }
-            if (element.hasAttribute("data-order-id")) {
-                element.dataset.orderId = orderId;
+        // Заменяем плейсхолдеры
+        template.querySelectorAll("[name]").forEach(el => {
+            if (el.hasAttribute("name")) {
+                let name = el.getAttribute("name")
+                    .replace(/NEW_ORDER/g, orderIndex);
+                el.setAttribute("name", name);
             }
         });
 
-        // Вставляем в DOM
-        ordersContainer.appendChild(template);
-
-        initializeSelect2()
+        ordersContainer.appendChild(template.firstElementChild);
+        initializeSelect2();
     }
 
 // Вспомогательный метод для генерации ID
@@ -89,7 +94,7 @@ export default class extends Controller {
         console.log("removeOrder вызван");
         const button = event.currentTarget;
         const order = button.closest(".order");
-        const destroyInput = order.querySelector('[name*="[orders][][_destroy]"]');
+        const destroyInput = order.querySelector('[name*="_destroy"]');
 
         if (destroyInput) destroyInput.value = "1";
         order.style.display = "none";

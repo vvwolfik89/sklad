@@ -9,6 +9,8 @@
               data-action="click->order-log-form#removeOrder"
               class="btn btn-sm btn-outline-danger">×</button>
     </div>
+    <%= f.label :number, "Номер заявки" %>
+    <%= f.number_field :number %>
 
     <%= f.label :product_type_ids, "Типы продуктов (через запятую)" %>
     <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "w-100 select2-auto" } %>
