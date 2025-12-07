@@ -1,30 +1,39 @@
-<!--<turbo-frame id="order_form">-->
-  <div class="order border p-2 mb-2" data-order-id="<%= f.object.persisted? ? f.object.id : 'NEW_ORDER' %>">
+  <div class="order border p-2 mb-2" data-controller="dynamic-lists" data-order-id="<%= f.object.persisted? ? f.object.id : 'NEW_ORDER' %>">
     <%= f.hidden_field :id %>
     <%= f.hidden_field :_destroy %>
-
 
     <div class="d-flex justify-content-end mb-1">
       <button type="button"
               data-action="click->order-log-form#removeOrder"
               class="btn btn-sm btn-outline-danger">×</button>
     </div>
-    <%= f.label :number, "Номер заявки" %>
-    <%= f.number_field :number %>
 
-    <%= f.label :product_type_ids, "Типы продуктов (через запятую)" %>
-    <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "w-100 select2-auto" } %>
+    <div class="row g-3">
+      <div class="col-md-3">
+        <%= f.label :number, "Номер заявки", class: "form-label" %>
+        <%= f.text_field :number, class: "form-control" %>
+      </div>
 
-    <%= f.label :lists, "Количество позиций" %>
-    <%= f.collection_select :lists, (1..10).to_a, :to_i, :to_s,
-                            { prompt: "Выберите количество" },
-                            { data: { action: "change->dynamic-fields#updateFields" }, class: "form-control mb-1" } %>
+      <div class="col-md-3">
+        <%= f.label :product_type_ids, "Типы продуктов (через запятую)", class: "form-label" %>
+        <%= f.collection_select :product_type_ids, ProductType.all, :id, :name,  { include_blank: false }, { multiple: true, class: "form-select select2-auto" } %>
+      </div>
 
-    <%= f.label :data_lists, "Дополнительные данные (JSON)" %>
-    <%= f.text_area :data_list,
-                    value: JSON.pretty_generate(f.object.data_list),
-                    class: "form-control",
-                    rows: 2 %>
+      <div class="col-md-3">
+        <%= f.label :lists, "Количество листов", class: "form-label" %>
+        <%= f.select :lists,
+                     options_for_select((1..10).map { |n| ["#{n}", n] }, f.object.lists),
+                     { include_blank: "Выберите количество" },
+                     {
+                       class: "form-select",
+                       data: { action: "change->dynamic-lists#update" }
+                     } %>
+      </div>
+    </div>
+
+    <!-- Контейнер для динамических полей -->
+    <div data-dynamic-lists-target="container" class="mt-3"></div>
+
+    <!-- Скрытое поле для JSON -->
+    <%= f.hidden_field :data_list, data: { dynamic_lists_target: "jsonField" } %>
   </div>
-
-<!--</turbo-frame>-->
