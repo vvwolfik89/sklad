@@ -9,19 +9,31 @@
             data-order-detail-target="removeButton"
             class="btn btn-sm btn-danger">×</button>
   </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th><%= f.label :partner_id, "Выберите контрагента" %></th>
+      <th>Лист 2</th>
+      <th>Общее количество мест</th>
+    </tr>
+    </thead>
+    <tbody>
+      <td><%= f.collection_select :partner_id, Partner.all, :id, :name,  { include_blank: false },{ class: "form-select form-select-sm select2", style: "font-size: 1rem;" } %>
+      </td>
+      <td>
+          <!-- Контейнер для Orders -->
+          <div data-order-detail-target="ordersContainer">
+            <%= f.fields_for :orders do |order_form| %>
+              <%= render "order_fields", f: order_form %>
+            <% end %>
+          </div>
+      </td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
 
-  <div class="mb-2">
-    <%= f.label :partner_id, "Выберите контрагента" %>
-    <%= f.collection_select :partner_id, Partner.all, :id, :name,  { include_blank: false }, { class: "select2" } %>
-  </div>
 
-
-  <!-- Контейнер для Orders -->
-  <div data-order-detail-target="ordersContainer">
-    <%= f.fields_for :orders do |order_form| %>
-      <%= render "order_fields", f: order_form %>
-    <% end %>
-  </div>
 
   <!-- 🔥 Шаблон для новых заказов — генерируется ВНУТРИ order_detail -->
   <template data-order-detail-target="orderTemplate">
