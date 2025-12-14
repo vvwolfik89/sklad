@@ -1,106 +1,109 @@
-import { Controller } from "@hotwired/stimulus";
-import { initializeSelect2 } from "../select2_bootstrap"; // Импортируем функцию
+import {Controller} from "@hotwired/stimulus";
+import {initializeSelect2} from "../select2_bootstrap";
 
 export default class extends Controller {
     static targets = [
         "orderDetailsContainer",
         "orderDetailTemplate",
-        "orderTemplate",
         "addOrderButton",
-        "removeButton"
+        "removeButton",
+        "totalSum"
     ];
 
-    // Добавление нового OrderDetail
+    connect() {
+        this.updateTotalSum();
+        this.observeOrderSumUpdates();
+    }
+
+    observeOrderSumUpdates() {
+        // Слушаем события из dynamic-lists (они всплывают)
+        this.orderDetailsContainerTarget.addEventListener("order-sum-updated", () => {
+            this.updateTotalSum();
+        });
+    }
+
+    updateTotalSum() {
+        const sumFields = this.orderDetailsContainerTarget.querySelectorAll(
+            '.order-detail:not([style*="display: none"]) [data-dynamic-lists-target="sumField"]'
+        );
+
+        const total = Array.from(sumFields)
+            .map(el => {
+                const text = el.textContent.trim();
+                const number = parseFloat(text.replace(/\s/g, '').replace(',', '.'));
+                return isNaN(number) ? 0 : number;
+            })
+            .reduce((acc, val) => acc + val, 0);
+
+        this.totalSumTarget.textContent = total.toLocaleString('ru-RU', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+    }
+
     addOrderDetail() {
         const template = this.orderDetailTemplateTarget.content.cloneNode(true);
         const container = this.orderDetailsContainerTarget;
+        const detailIndex = container.children.length;
 
-        // Получаем индекс
-        const detailIndex = container.querySelectorAll('.order-detail:not([style*="display: none"])').length;
-
-        // 🔁 Заменяем NEW_ORDER_DETAIL ВЕЗДЕ: в полях и в шаблонах
-        template.querySelectorAll("[name], [data-order-detail-target='orderTemplate'] [name]").forEach(el => {
-            if (el.hasAttribute("name")) {
-                const name = el.getAttribute("name").replace(/NEW_ORDER_DETAIL/g, detailIndex);
-                el.setAttribute("name", name);
-            }
-        });
-
-        // Или проще — обработать весь innerHTML
         const tempDiv = document.createElement('div');
         tempDiv.appendChild(template);
         tempDiv.innerHTML = tempDiv.innerHTML.replace(/NEW_ORDER_DETAIL/g, detailIndex);
 
         const newDetail = tempDiv.firstElementChild;
-
-        // Сохраняем индекс
         newDetail.dataset.orderDetailIndex = detailIndex;
         newDetail.dataset.orderDetailId = this._generateId();
 
         container.appendChild(newDetail);
-        initializeSelect2();
+        initializeSelect2(newDetail);
     }
 
-    // Удаление OrderDetail
     removeOrderDetail(event) {
-        console.log("removeOrderDetail вызван");
         const button = event.currentTarget;
         const container = button.closest(".order-detail");
         const destroyInput = container.querySelector('[name*="_destroy"]');
 
         if (destroyInput) destroyInput.value = "1";
         container.style.display = "none";
+        this.updateTotalSum(); // пересчитываем
     }
 
-    // Добавление Order внутри OrderDetail
     addOrder(event) {
         const orderDetail = event.currentTarget.closest(".order-detail");
-
-        // 🔎 Ищем шаблон ВНУТРИ этого order_detail
         const orderTemplate = orderDetail.querySelector('[data-order-detail-target="orderTemplate"]');
 
         if (!orderTemplate) {
-            console.error("Шаблон orderTemplate не найден внутри order_detail");
+            console.error("Шаблон orderTemplate не найден");
             return;
         }
 
         const ordersContainer = orderDetail.querySelector('[data-order-detail-target="ordersContainer"]');
         const orderIndex = ordersContainer.querySelectorAll('.order:not([style*="display: none"])').length;
 
-        // Клонируем
-        const template = orderTemplate.content.cloneNode(true);
+        const fragment = orderTemplate.content.cloneNode(true);
+        const newOrder = fragment.firstElementChild;
 
-        // Заменяем плейсхолдеры
-        template.querySelectorAll("[name]").forEach(el => {
-            if (el.hasAttribute("name")) {
-                let name = el.getAttribute("name")
-                    .replace(/NEW_ORDER/g, orderIndex);
-                el.setAttribute("name", name);
-            }
+        newOrder.querySelectorAll("[name]").forEach(el => {
+            const name = el.getAttribute("name").replace(/NEW_ORDER/g, orderIndex);
+            el.setAttribute("name", name);
         });
 
-        ordersContainer.appendChild(template.firstElementChild);
-        initializeSelect2();
+        ordersContainer.appendChild(newOrder);
+        initializeSelect2(newOrder);
+        this.updateTotalSum(); // на случай, если dynamic-lists не сработал
     }
 
-// Вспомогательный метод для генерации ID
-    _generateId() {
-        return `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    }
-
-
-    // Удаление Order
     removeOrder(event) {
-        console.log("removeOrder вызван");
         const button = event.currentTarget;
         const order = button.closest(".order");
         const destroyInput = order.querySelector('[name*="_destroy"]');
 
         if (destroyInput) destroyInput.value = "1";
         order.style.display = "none";
+        this.updateTotalSum();
     }
 
-    // Генератор уникального ID
     _generateId() {
         return `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
