@@ -14,7 +14,7 @@ export function initializeSelect2() {
             placeholder: $select.data('placeholder') || 'Выберите...',
             closeOnSelect: false,
             tags: true,
-            allowClear: true
+            // allowClear: true
         });
     });
 }

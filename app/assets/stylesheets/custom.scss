@@ -97,3 +97,30 @@
   border-radius: 4px;
   margin-bottom: 5px;
 }
+
+.select2-selection--multiple {
+  display: flex !important;
+  align-items: center !important;
+  //justify-content: flex-end !important;
+  flex-wrap: wrap;
+  padding-right: 8px;
+  min-height: 38px;
+}
+
+.select2-selection--multiple .select2-search--inline {
+  height: auto;
+  margin: 0;
+}
+
+.select2-search .select2-search--inline {
+  width: auto !important;
+  min-width: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  text-align: center;
+}
+

@@ -17,7 +17,7 @@
 
     <div class="col-md-4">
       <%= f.label :product_type_ids, "Типы продуктов (через запятую)", class: "form-label" %>
-      <%= f.collection_select :product_type_ids, ProductType.all, :id, :name, { include_blank: false }, { multiple: true, class: "form-select select2-auto" } %>
+      <%= f.collection_select :product_type_ids, ProductType.all, :id, :name, { include_blank: false }, { multiple: true, class: "select2-auto" } %>
     </div>
 
     <div class="col-md-4">

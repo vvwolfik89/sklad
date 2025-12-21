@@ -57,6 +57,23 @@ export default class extends Controller {
 
         container.appendChild(newDetail);
         initializeSelect2(newDetail);
+
+        // 🔥 Инициализируем все dynamic-lists внутри нового OrderDetail
+        this.initializeDynamicListsIn(newDetail);
+        this.updateTotalSum(); // пересчитываем общую сумму
+    }
+
+// Вспомогательный метод
+    initializeDynamicListsIn(parentElement) {
+        const dynamicListsElements = parentElement.querySelectorAll("[data-controller='dynamic-lists']");
+        dynamicListsElements.forEach(element => {
+            const controller = this.application.getControllerForElementAndIdentifier(element, "dynamic-lists");
+            if (controller) {
+                controller.restore(); // восстанавливаем поля и сумму
+            } else {
+                console.warn("Контроллер dynamic-lists не найден для элемента", element);
+            }
+        });
     }
 
     removeOrderDetail(event) {
