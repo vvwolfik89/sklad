@@ -23,55 +23,97 @@ export default class extends Controller {
     }
 
     updateTotalSum() {
-        const sumFields = this.orderDetailsContainerTarget.querySelectorAll(
-            '.order-detail:not([style*="display: none"]) [data-dynamic-lists-target="sumField"]'
-        );
+        // Находим все order-detail
+        const orderDetails = this.orderDetailsContainerTarget.querySelectorAll('.order-detail');
 
-        const total = Array.from(sumFields)
-            .map(el => {
-                const text = el.textContent.trim();
-                const number = parseFloat(text.replace(/\s/g, '').replace(',', '.'));
-                return isNaN(number) ? 0 : number;
-            })
-            .reduce((acc, val) => acc + val, 0);
+        orderDetails.forEach(detail => {
+            // Проверяем, видим ли мы этот order-detail
+            const isHidden = detail.style.display === 'none' ||
+                getComputedStyle(detail).display === 'none';
+            if (isHidden) return;
 
-        this.totalSumTarget.textContent = total.toLocaleString('ru-RU', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
+            // Находим все .order внутри этого detail, где есть [data-controller="dynamic-lists"]
+            const orders = detail.querySelectorAll('.order[data-controller="dynamic-lists"]');
+
+            const detailTotal = Array.from(orders)
+                .map(order => {
+                    const sumField = order.querySelector('[data-dynamic-lists-target="sumField"]');
+                    if (!sumField) return 0;
+
+                    const rawValue = sumField.textContent.trim();
+                    if (!rawValue) return 0;
+
+                    // Очищаем: убираем всё, кроме цифр, запятых, точек и минуса
+                    const cleanValue = rawValue.replace(/[^\d,.-]/g, '').replace(',', '.');
+                    const number = parseFloat(cleanValue);
+
+                    return isNaN(number) ? 0 : number;
+                })
+                .reduce((acc, val) => acc + val, 0);
+
+            // Находим totalSumTarget ВНУТРИ этого order-detail
+            const totalSumElement = detail.querySelector('[data-order-log-form-target="totalSum"]');
+            if (totalSumElement) {
+                totalSumElement.textContent = detailTotal.toLocaleString('ru-RU', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
         });
-
     }
+
+
+
 
     addOrderDetail() {
         const template = this.orderDetailTemplateTarget.content.cloneNode(true);
         const container = this.orderDetailsContainerTarget;
         const detailIndex = container.children.length;
 
-        const tempDiv = document.createElement('div');
-        tempDiv.appendChild(template);
-        tempDiv.innerHTML = tempDiv.innerHTML.replace(/NEW_ORDER_DETAIL/g, detailIndex);
-
-        const newDetail = tempDiv.firstElementChild;
+        const newDetail = template.firstElementChild;
         newDetail.dataset.orderDetailIndex = detailIndex;
         newDetail.dataset.orderDetailId = this._generateId();
+
+        this.replacePlaceholder(newDetail, /NEW_ORDER_DETAIL/g, detailIndex);
 
         container.appendChild(newDetail);
         initializeSelect2(newDetail);
 
-        // 🔥 Инициализируем все dynamic-lists внутри нового OrderDetail
-        this.initializeDynamicListsIn(newDetail);
-        this.updateTotalSum(); // пересчитываем общую сумму
+        // 🔥 Откладываем инициализацию dynamic-lists
+        Promise.resolve().then(() => {
+            this.initializeDynamicListsIn(newDetail);
+        });
     }
 
 // Вспомогательный метод
     initializeDynamicListsIn(parentElement) {
         const dynamicListsElements = parentElement.querySelectorAll("[data-controller='dynamic-lists']");
-        dynamicListsElements.forEach(element => {
+
+        dynamicListsElements.forEach((element, index) => {
+            // 🔁 Ждём, пока контроллер будет доступен
             const controller = this.application.getControllerForElementAndIdentifier(element, "dynamic-lists");
+
             if (controller) {
-                controller.restore(); // восстанавливаем поля и сумму
+                console.log("✅ Контроллер найден для:", element);
+                controller.restore();
+
+                // Откладываем updateSum, чтобы event всплыл
+                Promise.resolve().then(() => {
+                    controller.updateSum();
+                });
             } else {
-                console.warn("Контроллер dynamic-lists не найден для элемента", element);
+                console.warn("❌ Контроллер dynamic-lists НЕ найден для элемента:", element);
+                // Повторная попытка (на крайний случай)
+                setTimeout(() => {
+                    const retry = this.application.getControllerForElementAndIdentifier(element, "dynamic-lists");
+                    if (retry) {
+                        console.log("✅ Успешно найден после retry:", element);
+                        retry.restore();
+                        retry.updateSum();
+                    } else {
+                        console.error("❌ Не удалось найти контроллер даже после retry:", element);
+                    }
+                }, 50);
             }
         });
     }
@@ -120,6 +162,26 @@ export default class extends Controller {
         order.style.display = "none";
         this.updateTotalSum();
     }
+
+    // ✅ Метод должен быть объявлен ВНУТРИ класса
+    replacePlaceholder(element, placeholder, value) {
+        if (element.setAttribute) {
+            ['name', 'id', 'for'].forEach(attr => {
+                if (element.hasAttribute(attr)) {
+                    const attrValue = element.getAttribute(attr);
+                    if (placeholder.test(attrValue)) {
+                        element.setAttribute(attr, attrValue.replace(placeholder, value));
+                    }
+                }
+            });
+        }
+
+        // Рекурсивно обходим всех детей
+        element.querySelectorAll('*').forEach(child => {
+            this.replacePlaceholder(child, placeholder, value);
+        });
+    }
+
 
     _generateId() {
         return `id_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;

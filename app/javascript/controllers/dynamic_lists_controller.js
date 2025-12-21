@@ -4,6 +4,7 @@ export default class extends Controller {
     static targets = ["container", "jsonField", "sumField"]
 
     connect() {
+        console.log("dynamic-lists подключён к:", this.element)
         this.restore()
         this.updateSum() // Считаем при загрузке
     }
