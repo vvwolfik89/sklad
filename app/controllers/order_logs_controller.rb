@@ -11,6 +11,14 @@ class OrderLogsController < ApplicationController
   end
 
   def show
+    @order_log = OrderLog.includes(order_details: [:partner, :orders])
+                         .find(params[:id])
+
+    # Переопределяем отношение с явной сортировкой
+    @sorted_order_details = @order_log.order_details
+                                      .includes(:partner)
+                                      .order('partners.address ASC')
+                                      .load
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @order_log }
@@ -64,7 +72,7 @@ class OrderLogsController < ApplicationController
       order_details_attributes: [
         :id,
         :partner_id,
-        :cont_places,
+        :count_places,
         :_destroy, orders_attributes: [:id, :number, :lists, { product_type_ids: []},
                               :_destroy, :data_list]
 

@@ -10,6 +10,9 @@ class OrderDetail < ApplicationRecord
 
   validates_associated :orders, presence: true
 
+  def get_all_product_type_names
+    self.orders.map { |order| order.product_type_names }.flatten.uniq
+  end
   def marked_for_destruction?
     # Rails устанавливает @marked_for_destruction при передаче _destroy
     @marked_for_destruction == true

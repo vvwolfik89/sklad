@@ -1,4 +1,6 @@
 class Partner < ApplicationRecord
+  has_many :order_details
+
   require 'roo'
 
   validates :name, presence: true
