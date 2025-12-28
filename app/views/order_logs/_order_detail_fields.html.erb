@@ -29,7 +29,14 @@
         <% end %>
       </div>
     </td>
-    <td></td>
+    <td>
+      <!-- ИТОГО по OrderDetail -->
+      <div data-order-log-form-target="ordersContainer" class="mt-3 p-3 bg-light border rounded">
+        <strong>Итого мест по заказу:</strong>
+        <span data-order-log-form-target="totalSum" style="font-size: 1.2em; color: #d32f2f;">
+      0
+    </span>
+      </div></td>
     </tr>
     </tbody>
   </table>
@@ -49,13 +56,4 @@
           class="btn btn-sm btn-success">
     Добавить заявку
   </button>
-
-  <!-- ИТОГО по OrderDetail -->
-  <div data-order-log-form-target="ordersContainer" class="mt-3 p-3 bg-light border rounded">
-    <strong>Итого мест по заказу:</strong>
-    <span data-order-log-form-target="totalSum" style="font-size: 1.2em; color: #d32f2f;">
-      0
-    </span>
-  </div>
-
 </div>

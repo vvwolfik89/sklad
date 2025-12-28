@@ -23,19 +23,23 @@ export default class extends Controller {
     }
 
     updateTotalSum() {
-        // Находим все order-detail
         const orderDetails = this.orderDetailsContainerTarget.querySelectorAll('.order-detail');
 
         orderDetails.forEach(detail => {
-            // Проверяем, видим ли мы этот order-detail
+            // Проверяем видимость order-detail
             const isHidden = detail.style.display === 'none' ||
                 getComputedStyle(detail).display === 'none';
             if (isHidden) return;
 
-            // Находим все .order внутри этого detail, где есть [data-controller="dynamic-lists"]
+            // Находим все .order с data-controller="dynamic-lists"
             const orders = detail.querySelectorAll('.order[data-controller="dynamic-lists"]');
 
             const detailTotal = Array.from(orders)
+                .filter(order => {
+                    // Фильтруем: исключаем заказы с _destroy=1
+                    const destroyInput = order.querySelector('[name*="_destroy"]');
+                    return !(destroyInput && destroyInput.value === '1');
+                })
                 .map(order => {
                     const sumField = order.querySelector('[data-dynamic-lists-target="sumField"]');
                     if (!sumField) return 0;
@@ -43,7 +47,7 @@ export default class extends Controller {
                     const rawValue = sumField.textContent.trim();
                     if (!rawValue) return 0;
 
-                    // Очищаем: убираем всё, кроме цифр, запятых, точек и минуса
+                    // Очищаем строку: оставляем только цифры, запятые, точки и минус
                     const cleanValue = rawValue.replace(/[^\d,.-]/g, '').replace(',', '.');
                     const number = parseFloat(cleanValue);
 
@@ -51,7 +55,7 @@ export default class extends Controller {
                 })
                 .reduce((acc, val) => acc + val, 0);
 
-            // Находим totalSumTarget ВНУТРИ этого order-detail
+            // Обновляем отображение суммы для этого order-detail
             const totalSumElement = detail.querySelector('[data-order-log-form-target="totalSum"]');
             if (totalSumElement) {
                 totalSumElement.textContent = detailTotal.toLocaleString('ru-RU', {
@@ -130,6 +134,10 @@ export default class extends Controller {
 
     addOrder(event) {
         const orderDetail = event.currentTarget.closest(".order-detail");
+
+        // Получаем значение через dataset
+        const orderDetailIndex = orderDetail.dataset.orderDetailIndex;
+
         const orderTemplate = orderDetail.querySelector('[data-order-detail-target="orderTemplate"]');
 
         if (!orderTemplate) {
@@ -144,13 +152,15 @@ export default class extends Controller {
         const newOrder = fragment.firstElementChild;
 
         newOrder.querySelectorAll("[name]").forEach(el => {
-            const name = el.getAttribute("name").replace(/NEW_ORDER/g, orderIndex);
+            const name = el.getAttribute("name")
+                .replace(/NEW_ORDER_DETAIL/g, orderDetailIndex)
+                .replace(/NEW_ORDER/g, orderIndex);
             el.setAttribute("name", name);
         });
 
         ordersContainer.appendChild(newOrder);
         initializeSelect2(newOrder);
-        this.updateTotalSum(); // на случай, если dynamic-lists не сработал
+        this.updateTotalSum();
     }
 
     removeOrder(event) {
