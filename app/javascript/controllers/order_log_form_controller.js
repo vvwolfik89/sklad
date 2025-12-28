@@ -7,7 +7,8 @@ export default class extends Controller {
         "orderDetailTemplate",
         "addOrderButton",
         "removeButton",
-        "totalSum"
+        "totalSum",
+        "countPlacesInputTarget"
     ];
 
     connect() {
@@ -63,11 +64,12 @@ export default class extends Controller {
                     maximumFractionDigits: 2
                 });
             }
+            const countPlacesInput = detail.querySelector('[data-order-log-form-target="countPlacesInput"]');
+            if (countPlacesInput) {
+                countPlacesInput.value = detailTotal;
+            }
         });
     }
-
-
-
 
     addOrderDetail() {
         const template = this.orderDetailTemplateTarget.content.cloneNode(true);

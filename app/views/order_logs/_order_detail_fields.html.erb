@@ -19,7 +19,8 @@
     </tr>
     </thead>
     <tbody>
-    <td><%= f.collection_select :partner_id, Partner.all, :id, :name, { include_blank: false }, { class: "form-select form-select-sm select2", style: "font-size: 1rem;" } %>
+    <td>
+      <%= f.collection_select :partner_id, Partner.all, :id, :name, { include_blank: false }, { class: "form-select form-select-sm select2", style: "font-size: 1rem;" } %>
     </td>
     <td>
       <!-- Контейнер для Orders -->
@@ -33,10 +34,14 @@
       <!-- ИТОГО по OrderDetail -->
       <div data-order-log-form-target="ordersContainer" class="mt-3 p-3 bg-light border rounded">
         <strong>Итого мест по заказу:</strong>
-        <span data-order-log-form-target="totalSum" style="font-size: 1.2em; color: #d32f2f;">
-      0
-    </span>
-      </div></td>
+
+        <!-- Визуальный дисплей -->
+        <span data-order-log-form-target="totalSum" style="font-size: 1.2em; color: #d32f2f;">0</span>
+
+        <!-- Скрытое поле -->
+        <%= f.hidden_field :count_places, data: { order_log_form_target: "countPlacesInput" } %>
+      </div>
+    </td>
     </tr>
     </tbody>
   </table>
