@@ -12,15 +12,17 @@
             <tr>
               <th>Контрагент</th>
               <th>Типы продуктов</th>
+              <th>Город</th>
               <th>Количество мест</th>
             </tr>
 
             </thead>
             <tbody>
             <% @sorted_order_details.each do |order_detail| %>
-            <tr>
+            <tr class="<%= get_highlight_class(order_detail.partner.address)%>" >
               <td><%= order_detail.partner.name %></td>
               <td><%= order_detail.get_all_product_type_names.join(', ') %></td>
+              <td><%= order_detail.partner.address %></td>
               <td><%= order_detail.count_places %></td>
             </tr>
             <% end %>
