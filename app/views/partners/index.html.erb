@@ -12,9 +12,9 @@
     <table class="table  table-striped">
       <thead>
       <tr>
-<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.name") %></th>-->
+        <th scope="col"><%= I18n.t("activerecord.attributes.partner.name") %></th>
 <!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.email") %></th>-->
-<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.address") %></th>-->
+        <th scope="col"><%= I18n.t("activerecord.attributes.partner.address") %></th>
 <!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.phone_number") %></th>-->
       </tr>
       </thead>
@@ -27,14 +27,19 @@
                 <h5> <%= partner.name %> </h5>
               </a>
             </td>
-            <td>
-              <h5> <%= partner.email %> </h5>
-            </td>
+<!--            <td>-->
+<!--              <h5> <%#= partner.email %> </h5>-->
+<!--            </td>-->
             <td>
               <h5> <%= partner.address %> </h5>
             </td>
+<!--            <td>-->
+<!--              <h5> <%#= partner.phone_number %> </h5>-->
+<!--            </td>-->
             <td>
-              <h5> <%= partner.phone_number %> </h5>
+              <%= link_to("Подробнее", partner_path(partner), class: "btn btn-sm btn-primary") if can?(:show, partner) %>
+              <%= link_to("Исправить", edit_partner_path(partner), class: "btn btn-sm btn btn-secondary") if can?(:edit, partner) %>
+              <%= link_to("Удалить", partner_path(partner), data: { turbo_method: :delete, turbo_confirm: "Удалить партнера?" }, class: "btn btn-danger btn-block") if can?(:destroy, partner) %>
             </td>
           </tr>
         <% end %>

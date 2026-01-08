@@ -1,0 +1,52 @@
+<div class="row pb-md-2">
+  <div class="col-md-6">
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <span class="fa fa-filter"></span>Filter
+        </span>
+      </div>
+      <div class="panel-body">
+        <%= form_tag(order_logs_path, class: "form-horizontal", method: :get) do %>
+          <div class="form-group pb-md-2">
+            <div class="col-sm-3">
+              <%= label_tag("partner_ids", "Контрагент", class: "control-label") %>
+            </div>
+            <div class="col-sm-9">
+              <%= select_tag "partner_ids",
+                             options_from_collection_for_select(Partner.all, :id, :name),
+                             { include_blank: true, multiple:true, class: "form-select form-select-sm select2-auto" } %>
+            </div>
+          </div>
+
+          <div class="form-group pb-md-2">
+            <div class="col-sm-3">
+              <%= label_tag("product_type_ids", "Типы продуктов", class: "control-label") %>
+            </div>
+            <div class="col-sm-9">
+              <%= select_tag "product_type_ids",
+                             options_from_collection_for_select(ProductType.all, :id, :name),
+                             { include_blank: true, multiple:true, class: "form-select form-select-sm select2-auto" } %>
+            </div>
+          </div>
+
+          <div class="form-group pb-md-2">
+            <div class="col-sm-3">
+              <%= label_tag("date", "Дата", class: "control-label") %>
+            </div>
+            <div class="col-sm-9">
+              <%= date_field_tag(:date, params[:date], class: "form-control", 'data-tags' => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-4">
+              <div class="controls">
+                <%= submit_tag("Filter", class: "btn btn-info btn-block") %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

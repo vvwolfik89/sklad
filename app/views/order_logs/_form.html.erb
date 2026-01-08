@@ -1,0 +1,37 @@
+<%= form_with(model: @order_log, local: true) do |f| %>
+  <% if @order_log.errors.present? %>
+    <div class="alert alert-danger">
+      <% @order_log.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div data-controller="order-log-form">
+    <%= f.label :date, "Дата журнала" %>
+    <%= f.date_field :date, required: true %>
+
+    <!-- Только контейнер для order_details -->
+    <div data-order-log-form-target="orderDetailsContainer">
+      <%= f.fields_for :order_details do |ff| %>
+        <%= render "order_detail_fields", f: ff %>
+      <% end %>
+    </div>
+
+    <!-- Кнопка вне container -->
+    <button type="button"
+            data-action="click->order-log-form#addOrderDetail"
+            class="btn btn-secondary mt-2">
+      Добавить детали заказа
+    </button>
+
+    <%= f.submit class: "btn btn-primary mt-2" %>
+
+    <!-- Шаблон ВНЕ container -->
+    <template data-order-log-form-target="orderDetailTemplate">
+      <%= f.fields_for :order_details, OrderDetail.new, child_index: "NEW_ORDER_DETAIL" do |ff| %>
+        <%= render "order_detail_fields", f: ff %>
+      <% end %>
+    </template>
+  </div>
+<% end %>

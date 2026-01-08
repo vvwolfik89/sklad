@@ -1,0 +1,19 @@
+<div>
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+<!--        <img src="..." class="img-fluid rounded-start" alt="...">-->
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><%= @product_type.name %></h5>
+          <div class="mb15">
+            <%= link_to("Edit", edit_product_type_path(@product_type), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, @product_type)  %>
+            <%= link_to("Destroy", product_type_path(@product_type), data: { turbo_method: :delete, turbo_confirm: "Удалить партнера?" }, class: "btn btn-danger btn-block") if can?(:destroy, @product_type) %>
+            <%= link_to("All Product Type", product_types_path, class: "btn btn-block btn-dark pv10 fw600 mb10")%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

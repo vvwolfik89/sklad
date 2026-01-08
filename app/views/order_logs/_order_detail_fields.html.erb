@@ -1,0 +1,64 @@
+<div class="order-detail border p-3 mb-3" data-order-log-form-target="ordersContainer" data-order-detail-id="<%= f.object.persisted? ? f.object.id : 'NEW_ORDER_DETAIL' %>">
+  <%= f.hidden_field :id %>
+  <%= f.hidden_field :_destroy %>
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5>Заказ</h5>
+    <button type="button"
+            data-action="click->order-log-form#removeOrderDetail"
+            data-order-detail-target="removeButton"
+            class="btn btn-sm btn-danger">×
+    </button>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th><%= f.label :partner_id, "Выберите контрагента" %></th>
+      <th>Лист 2</th>
+      <th>Общее количество мест</th>
+    </tr>
+    </thead>
+    <tbody>
+    <td>
+      <%= f.collection_select :partner_id, Partner.all, :id, :name, { include_blank: false }, { class: "form-select form-select-sm select2", style: "font-size: 1rem;" } %>
+    </td>
+    <td>
+      <!-- Контейнер для Orders -->
+      <div data-order-detail-target="ordersContainer">
+        <%= f.fields_for :orders do |order_form| %>
+          <%= render "order_fields", f: order_form %>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <!-- ИТОГО по OrderDetail -->
+      <div data-order-log-form-target="ordersContainer" class="mt-3 p-3 bg-light border rounded">
+        <strong>Итого мест по заказу:</strong>
+
+        <!-- Визуальный дисплей -->
+        <span data-order-log-form-target="totalSum" style="font-size: 1.2em; color: #d32f2f;">0</span>
+
+        <!-- Скрытое поле -->
+        <%= f.hidden_field :count_places, data: { order_log_form_target: "countPlacesInput" } %>
+      </div>
+    </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <!-- 🔥 Шаблон для новых заказов — генерируется ВНУТРИ order_detail -->
+  <template data-order-detail-target="orderTemplate">
+    <%= f.fields_for :orders, Order.new, child_index: "NEW_ORDER" do |order_form| %>
+      <%= render "order_fields", f: order_form %>
+    <% end %>
+  </template>
+
+  <!-- Кнопка добавления Order -->
+  <button type="button"
+          data-action="click->order-log-form#addOrder"
+          data-order-detail-target="addOrderButton"
+          class="btn btn-sm btn-success">
+    Добавить заявку
+  </button>
+</div>

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :partners do
     collection { post :import }
   end
+  resources :product_types
+  resources :order_logs
   # Defines the root path route ("/")
   root "departments#index"
 end
