@@ -1,30 +1,113 @@
 <h1><%= I18n.t("order_logs") %></h1>
 
-<%= link_to "#{I18n.t("activerecord.attributes.order_log.new_order_log")}", new_order_log_path %>
-<div>
-  <div>
-    <table class="table  table-striped">
-      <thead>
-      <tr>
-        <th scope="col"><%= I18n.t("activerecord.attributes.order_log.name") %></th>
-<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.email") %></th>-->
-<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.address") %></th>-->
-<!--        <th scope="col"><%#= I18n.t("activerecord.attributes.partner.phone_number") %></th>-->
-      </tr>
-      </thead>
-      <tbody>
-      <% if @order_logs %>
-        <% @order_logs.each do |order_log| %>
-          <tr>
-            <td>
-              <a href="<%= order_log_path(order_log) %>">
-                <h5> <%= order_log.date %> </h5>
-              </a>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
-      </tbody>
-    </table>
+<%#= link_to "#{I18n.t("activerecord.attributes.order_log.new_order_log")}", new_order_log_path %>
+<!--<div>-->
+<!--  <div>-->
+<!--    <table>-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th><%#= link_to "ID Log", order_logs_path(sort: 'id') %></th>-->
+<!--        <th>-->
+          <%#= link_to "Партнёр", order_logs_path(sort: 'partner_name_asc') %>
+          <%#= link_to "↓", order_logs_path(sort: 'partner_name_desc') %>
+<!--        </th>-->
+<!--        <th>-->
+          <%#= link_to "Тип продукта", order_logs_path(sort: 'product_type_name_asc') %>
+          <%#= link_to "↓", order_logs_path(sort: 'product_type_name_desc') %>
+<!--        </th>-->
+<!--        Другие колонки -->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+      <%# @order_logs.each do |log| %>
+<!--        <tr>-->
+<!--          <td><%#= log.id %></td>-->
+<!--          <td><%#= log.order_details.first&.partner&.name %></td>-->
+<!--          <td>-->
+            <%# log.order_details.each do |detail| %>
+              <%# detail.orders.each do |order| %>
+                <%#= detail.get_all_product_type_names %>
+              <%# end %>
+            <%# end %>
+<!--          </td>-->
+<!--        </tr>-->
+      <%# end %>
+<!--      </tbody>-->
+<!--    </table>-->
+
+<!--    Пагинация -->
+    <%#= will_paginate @order_logs %>
+<!--  </div>-->
+<!--</div>-->
+
+
+<%= render partial: "filter" %>
+
+<%= content_for :breadcrumbs do %>
+  <li class="crumb-trail">
+    Заказы
+  </li>
+<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel">
+      <div class="panel-body pn">
+        <div class="bs-component">
+          <div class="col-md-6 mt20 mb20">
+            <%= link_to("New", new_order_log_path, class: "btn btn-primary") if can?(:create, OrderLog) %>
+            <%#= new_help_desk_link_helper('panel-campaign-new') %>
+          </div>
+          <% if @order_logs.empty? %>
+            <div class="alert alert-info">
+              По выбранной дате записей не найдено.
+            </div>
+          <% else %>
+          <div class="col-md-6 text-right">
+            <%= will_paginate @order_logs %>
+          </div>
+          <div class="col-md-12">
+            <table class="table table-hover table-striped">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Дата</th>
+<!--                <th>Company</th>-->
+<!--                <th>Dialer CampID</th>-->
+<!--                <th>Tags</th>-->
+<!--                <th>Form Definition</th>-->
+<!--                <th>Campaign Agent Hours</th>-->
+<!--                <th>Actions</th>-->
+              </tr>
+              </thead>
+              <tbody>
+              <% @order_logs.each do |order_log| %>
+                <tr>
+                  <td><%= order_log.id %></td>
+                  <td><%= order_log.date %></td>
+<!--                  <td><%#= link_to(campaign.description, campaign_path(campaign)) %></td>-->
+<!--                  <td><%#= campaign.try(:company).try(:company_name) || "N/A" %></td>-->
+<!--                  <td><%#= campaign.dialier_campaign_id %></td>-->
+<!--                  <td><%#= show_tag_list(campaign.tag_list) %></td>-->
+<!--                  <td><%#= campaign.dynamic_form_definition.try(:name) %></td>-->
+<!--                  <td><%#= campaign.daily_agents_hours %></td>-->
+                  <td>
+                    <%= link_to("Show", order_log_path(order_log), class: "btn btn-sm btn-primary") if can?(:show, order_log) %>
+                    <%= link_to("Edit", edit_order_log_path(order_log), class: "btn btn-sm btn btn-secondary") if can?(:edit, order_log) %>
+                    <%= link_to("Destroy", order_log_path(order_log), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger") if can?(:destroy, order_log) %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-md-12 text-right">
+            <%= will_paginate @order_logs %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

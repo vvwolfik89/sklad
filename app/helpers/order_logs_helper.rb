@@ -25,4 +25,8 @@ module OrderLogsHelper
     end
     '' # если город не найден
   end
+
+  def partners_collection
+    available_partners
+  end
 end

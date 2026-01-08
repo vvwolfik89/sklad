@@ -8,6 +8,27 @@ class OrderLog < ApplicationRecord
   validates_associated :order_details, presence: true
   validate :unique_partner_ids_in_order_details
 
+  scope :by_date, -> (date) { where(date: date) if date.present? }
+  scope :with_all_partners, -> (partner_ids) {
+    return all unless partner_ids.present? && partner_ids.any?
+
+    joins(order_details: :partner)
+      .where(order_details: { partner_id: partner_ids })
+      .group(:id)
+      .having("COUNT(DISTINCT order_details.partner_id) = ?", partner_ids.size)
+  }
+  scope :with_product_types, -> (product_type_ids) {
+    return all unless product_type_ids.present? && product_type_ids.any?
+
+    # Удаляем дубликаты
+    unique_ids = product_type_ids.uniq
+
+    joins(order_details: { orders: :product_types })
+      .where(product_types: { id: unique_ids })
+      .group(:id)
+      .having("COUNT(DISTINCT product_types.id) = ?", unique_ids.size)
+  }
+
   private
 
   def unique_partner_ids_in_order_details
