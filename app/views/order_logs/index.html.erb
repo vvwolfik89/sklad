@@ -92,9 +92,9 @@
 <!--                  <td><%#= campaign.dynamic_form_definition.try(:name) %></td>-->
 <!--                  <td><%#= campaign.daily_agents_hours %></td>-->
                   <td>
-                    <%= link_to("Show", order_log_path(order_log), class: "btn btn-sm btn-primary") if can?(:show, order_log) %>
-                    <%= link_to("Edit", edit_order_log_path(order_log), class: "btn btn-sm btn btn-secondary") if can?(:edit, order_log) %>
-                    <%= link_to("Destroy", order_log_path(order_log), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger") if can?(:destroy, order_log) %>
+                    <%= link_to("Подробнее", order_log_path(order_log), class: "btn btn-sm btn-primary") if can?(:show, order_log) %>
+                    <%= link_to("Исправить", edit_order_log_path(order_log), class: "btn btn-sm btn-secondary") if can?(:edit, order_log) %>
+                    <%= link_to("Удалить", order_log_path(order_log), data: { turbo_method: :delete, turbo_confirm: "Удалить сборку?" }, class: "btn btn-sm btn-danger") if can?(:destroy, order_log) %>
                   </td>
                 </tr>
               <% end %>
