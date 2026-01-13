@@ -1,40 +1,65 @@
 <div>
-  <div class="card mb-3" >
+  <div class="card mb-3">
     <div class="row g-0">
-<!--      <div class="col-md-4">-->
-<!--        <img src="..." class="img-fluid rounded-start" alt="...">-->
-<!--      </div>-->
-      <div class="col-md-12">
-        <div class="card-body">
-          <h5 class="card-title"><%= @order_log.date %></h5>
-          <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>Контрагент</th>
-              <th>Типы продуктов</th>
-              <th>Город</th>
-              <th>Количество мест</th>
-            </tr>
+      <!--      <div class="col-md-4">-->
+      <!--        <img src="..." class="img-fluid rounded-start" alt="...">-->
+      <!--      </div>-->
+    </div>
 
-            </thead>
-            <tbody>
-            <% @sorted_order_details.each do |order_detail| %>
-            <tr class="<%= get_highlight_class(order_detail.partner.address)%>" >
+    <%= render 'shared/versions_modal' %>
+
+    <div class="col-md-12">
+      <div class="col-md-3">
+
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @order_log.date %></h5>
+        <h6 class="card-title">Последее изменение сделал(а):</h6>
+        <h5 class="card-title"><%= @order_log.last_changed_by.full_name %></h5>
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>Контрагент</th>
+            <th>Типы продуктов</th>
+            <th>Город</th>
+            <th>Количество мест</th>
+          </tr>
+
+          </thead>
+          <tbody>
+          <% @sorted_order_details.each do |order_detail| %>
+            <tr class="<%= get_highlight_class(order_detail.partner.address) %>">
               <td><%= order_detail.partner.name %></td>
               <td><%= order_detail.get_all_product_type_names.join(', ') %></td>
               <td><%= order_detail.partner.address %></td>
               <td><%= order_detail.count_places %></td>
             </tr>
-            <% end %>
-            </tbody>
-          </table>
-          <div class="mb15">
-            <%= link_to("Edit", edit_order_log_path(@order_log), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, @order_log)  %>
-            <%= link_to("Destroy", order_log_path(@order_log), data: { turbo_method: :delete, turbo_confirm: "Удалить партнера?" }, class: "btn btn-danger btn-block") if can?(:destroy, @order_log) %>
-            <%= link_to("All Product Type", order_logs_path, class: "btn btn-block btn-dark pv10 fw600 mb10")%>
-          </div>
+          <% end %>
+          </tbody>
+        </table>
+        <div class="mb15">
+          <%= link_to("Исправить", edit_order_log_path(@order_log), class: "btn btn-primary btn-block pv10 fw600 mb10") if can?(:update, @order_log) %>
+          <%= link_to("Удалить", order_log_path(@order_log), data: { turbo_method: :delete, turbo_confirm: "Удалить сборку?" }, class: "btn btn-danger btn-block") if can?(:destroy, @order_log) %>
+          <%= link_to("Все сборки", order_logs_path, class: "btn btn-block btn-dark pv10 fw600 mb10") %>
+          <%= link_to("История изменений", nil, data: { bs_target: "#versionModal",
+                                                        action: "click->version-modal#show",
+                                                        version_modal_url: "#{version_history_order_log_path(@order_log) }",
+                                                        bs_toggle: "modal"
+          }, class: "btn btn-info btn-block pv10 fw600 mb10") %>
+
+<!--          <button-->
+<!--            data-bs-target="#versionModal"-->
+<!--            data-action="click->version-modal#show"-->
+<!--            data-version-modal-url="<%#= version_history_order_log_path(@order_log) %>"-->
+<!--            class="btn btn-info btn-block pv10 fw600 mb10"-->
+<!--            type="button"-->
+<!--            data-bs-toggle="modal"-->
+<!--          >-->
+<!--            История изменений-->
+<!--          </button>-->
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>

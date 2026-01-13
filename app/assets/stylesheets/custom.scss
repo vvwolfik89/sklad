@@ -137,3 +137,8 @@ td, th {
 .highlight-grodno     { background-color: rebeccapurple; }
 .highlight-brest     { background-color: orange; }
 
+.modal-body pre {
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+}

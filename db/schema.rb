@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_12_28_135712) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_11_203830) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -196,6 +196,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_28_135712) do
     t.string "whodunnit_name"
     t.text "object", size: :long
     t.datetime "created_at"
+    t.text "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 

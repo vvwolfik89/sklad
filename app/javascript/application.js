@@ -2,10 +2,11 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "jquery"
-import "bootstrap"
+import 'bootstrap'
 import "select2"
 import "select2_bootstrap"
 import * as bootstrap from "bootstrap"
+import "./versions-list"
 
 window.$ = window.jQuery
 

@@ -24,13 +24,13 @@
 
 <body>
 <% if current_user %>
-  <div class="container-xxl position-relative bg-white d-flex p-0">
+  <div class="position-relative bg-white d-flex p-0">
     <%#= render 'shared/spinner' %>
     <%= render 'shared/menu' %>
-    <div class="content">
+    <div class="content p-4">
       <%= render 'shared/header' %>
       <%= yield %>
-      <%= render 'shared/footer' %>
+      <%#= render 'shared/footer' %>
     </div>
   </div>
   <%= javascript_include_tag "template/lib/tempusdominus/js/moment.min.js" %>
