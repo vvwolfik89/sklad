@@ -91,6 +91,22 @@ class OrderLogsController < ApplicationController
     end
   end
 
+  def version_history
+    @order_log = OrderLog.find(params[:id])
+
+    # Собираем версии с информацией о пользователе
+    versions = @order_log.related_versions.map do |version|
+      {
+        event: version.event,
+        changed_at: version.created_at.strftime("%d.%m.%Y %H:%M"),
+        changed_by: version.whodunnit ? User.find_by(id: version.whodunnit)&.full_name : "Неизвестно",
+        changes: version.changeset
+      }
+    end
+
+    render json: versions
+  end
+
   protected
   # Безопасные параметры для index-действия
   def permitted_index_params

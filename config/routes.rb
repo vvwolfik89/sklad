@@ -14,7 +14,12 @@ Rails.application.routes.draw do
     collection { post :import }
   end
   resources :product_types
-  resources :order_logs
+
+  resources :order_logs do
+    member do
+      get :version_history  # ← внутри блока resources!
+    end
+  end
   # Defines the root path route ("/")
-  root "departments#index"
+  root "order_logs#index"
 end

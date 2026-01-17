@@ -1,4 +1,6 @@
 class OrderLog < ApplicationRecord
+  include TrackableLastChanger
+  has_paper_trail ignore: [:updated_at]
 
   has_many :order_details, dependent: :destroy
   accepts_nested_attributes_for :order_details, allow_destroy: true
@@ -28,6 +30,17 @@ class OrderLog < ApplicationRecord
       .group(:id)
       .having("COUNT(DISTINCT product_types.id) = ?", unique_ids.size)
   }
+  def related_versions
+    # Собираем версии всех связанных записей
+    versions = self.versions
+    order_details.each do |detail|
+      versions += detail.versions
+      detail.orders.each do |order|
+        versions += order.versions
+      end
+    end
+    versions.sort_by(&:created_at)
+  end
 
   private
 
@@ -53,6 +66,4 @@ class OrderLog < ApplicationRecord
       )
     end
   end
-
-
 end
