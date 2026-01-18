@@ -1,6 +1,6 @@
 <%= content_for :breadcrumbs do %>
   <li class="crumb-trail">
-    Permissions
+    Разрешения
   </li>
 <% end %>
 
@@ -43,8 +43,9 @@
                   <td><%= permission.is_active %></td>
                   <td><%= permission.created_at %></td>
                   <td>
-                    <%= link_to("Edit", edit_permission_path(permission), class: "btn btn-sm btn-default") if can?(:edit, permission) %>
-                    <%= link_to("Destroy", permission_path(permission), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-danger") if can?(:destroy, permission) %>
+                    <%= link_to("Просмотреть", permission_path(permission), class: "btn btn-sm btn-primary") if can?(:show, permission) %>
+                    <%= link_to("Исправить", edit_permission_path(permission), class: "btn btn-sm btn-secondary") if can?(:edit, permission) %>
+                    <%= link_to("Удалить", permission_path(permission), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-danger") if can?(:destroy, permission) %>
                   </td>
                 </tr>
               <% end %>

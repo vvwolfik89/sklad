@@ -6,14 +6,11 @@
           <div class="panel-body">
             <%= f.input :title %>
             <%= f.input :description %>
-            <%= f.input :role_type, collection: Role.role_type_attributes_for_select, include_blank: false  %>
-            <%= f.association :permissions, collection: Permission.all, include_blank: true  %>
-            <div class="form-group">
-              <div class="col-sm-offset-3 col-sm-2">
-                <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
-              </div>
-              <div class="col-sm-2">
-                <%= link_to("Cancel", roles_path, class: "btn btn-default btn-block") %>
+            <%= f.input :role_type, collection: Role.role_type_attributes_for_select, include_blank: false, class: " select2-auto"  %>
+            <div class="row">
+              <div class="col-sm-offset-3 col-sm-2 p-3">
+                <%= f.button :submit, "Сохранить", class: "btn-primary btn-block" %>
+                <%= link_to("Все роли", roles_path, class: "btn btn-dark btn-block") %>
               </div>
             </div>
           </div>

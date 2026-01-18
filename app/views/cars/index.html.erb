@@ -1,17 +1,17 @@
-  <h1><%= I18n.t("cars")%></h1>
-  <%= link_to 'New Car', new_car_path %>
+<h1><%= I18n.t("cars") %></h1>
+<%= link_to 'Создать новый авто', new_car_path, class: "btn btn-primary" %>
+<div>
   <div>
-    <div>
-      <table class="table  table-striped">
-        <thead>
-        <tr>
-          <th scope="col"><%= I18n.t("activerecord.attributes.car.registration_number")%></th>
-          <th scope="col"><%= I18n.t("activerecord.attributes.car.brand")%></th>
-          <th scope="col"><%= I18n.t("activerecord.attributes.car.model")%></th>
-        </tr>
-        </thead>
-        <tbody>
-        <% if @cars %>
+    <table class="table  table-striped">
+      <thead>
+      <tr>
+        <th scope="col"><%= I18n.t("activerecord.attributes.car.registration_number") %></th>
+        <th scope="col"><%= I18n.t("activerecord.attributes.car.brand") %></th>
+        <th scope="col"><%= I18n.t("activerecord.attributes.car.model") %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @cars %>
         <% @cars.each do |car| %>
           <tr>
             <td><a href="<%= car_path(car) %>">
@@ -21,11 +21,10 @@
             </td>
             <td><h5> <%= car.model %></h5>
             </td>
-
           </tr>
         <% end %>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
+      <% end %>
+      </tbody>
+    </table>
   </div>
+</div>
