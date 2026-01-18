@@ -16,28 +16,49 @@
             <%#= f.input :is_active %>
             <%# end %>
 
-            <%# if can?(:view_agent_tier, @agent) %>
-            <%= f.association :roles, collection: Role.all, include_blank: false, multiple: false %>
-            <%# end %>
+            <%= f.association :roles,
+                              collection: Role.all,
+                              label: "Роль",
+                              prompt: "Выберите роль",
+                              include_blank: false,
+                              input_html: {
+                                multiple: false, # или true, если нужно
+                                class: "selectpicker select2-auto",
+                                data: { live_search: true }
+                              }
+            %>
             <%= f.input :first_name %>
             <%= f.input :last_name %>
             <%= f.input :patronymic %>
             <%= f.input :email %>
-            <%= f.association :departments, collection: Department.all, class: "selectpicker", data_live_search: "true" %>
-            <% if f.object.new_record? %>
-            <div class="field">
-              <%= f.label :password %>
-              <% if @minimum_password_length %>
-                <em>(<%= @minimum_password_length %> characters minimum)</em>
-              <% end %><br />
-              <%= f.password_field :password, autocomplete: "new-password" %>
-            </div>
+            <%= f.association :departments,
+                              collection: -> { Department.all },
+                              label: "Отдел",
+                              prompt: "Выберите отдел",
+                              include_blank: false,
+                              selected: @user.departments.first&.id,
+                              error: @user.errors[:departments],
+                              input_html: {
+                                multiple: false, # или true, если нужно
+                                class: "selectpicker select2-auto",
+                                data: { live_search: true }
+                              },
+                              value_method: :id %>
 
-            <div class="field">
-              <%= f.label :password_confirmation %><br />
-              <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-            </div>
-            <% end %><br />
+            <% if f.object.new_record? %>
+              <div class="field">
+                <%= f.label :password %>
+                <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %><br/>
+                <%= f.password_field :password, autocomplete: "new-password" %>
+              </div>
+
+              <div class="field">
+                <%= f.label :password_confirmation %><br/>
+                <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+              </div>
+            <% end %><br/>
             <div class='field p-3'>
               <%= f.label :bday %>
               <%= f.date_select :bday, start_year: 1950 %>
@@ -47,7 +68,7 @@
           <div class="row">
             <div class="col-sm-offset-3 col-sm-2 p-3">
               <%= f.button :submit, "Save", class: "btn-primary btn-block" %>
-              <%= link_to("Cancel", users_path, class: "btn btn-dark btn-block") %>
+              <%= link_to("Все пользователи", users_path, class: "btn btn-dark btn-block") %>
             </div>
           </div>
         </div>

@@ -31,15 +31,11 @@ class OrderLog < ApplicationRecord
       .having("COUNT(DISTINCT product_types.id) = ?", unique_ids.size)
   }
   def related_versions
-    # Собираем версии всех связанных записей
-    versions = self.versions
-    order_details.each do |detail|
-      versions += detail.versions
-      detail.orders.each do |order|
-        versions += order.versions
-      end
-    end
-    versions.sort_by(&:created_at)
+    versions = [self.versions]
+    versions += order_details.map(&:versions)
+    versions += order_details.flat_map(&:orders).map(&:versions)
+
+    versions.flatten.sort_by { |v| v.created_at || Time.at(0) }
   end
 
   private
