@@ -1,0 +1,39 @@
+<h1>Запись от <%= @entry.date %></h1>
+<p><strong>Автор:</strong> <%= @entry.creator.full_name %></p>
+
+
+<div class="mt-4">
+  <h3>Данные записи</h3>
+  <dl class="row">
+    <% @entry.field_values.each do |fv| %>
+      <dt class="col-sm-3"><%= fv.field.name %></dt>
+      <dd class="col-sm-9">
+        <% case fv.field.field_type %>
+        <% when "text" %>
+          <%= fv.value %>
+
+        <% when "date" %>
+          <%= Date.parse(fv.value) if fv.value.present? %>
+
+
+        <% when "boolean" %>
+          <%= fv.value == "true" ? "Да" : "Нет" %>
+
+
+        <% when /_select$/ %>
+          <% related_record = fv.field.related_model.constantize.find(fv.related_record_id) %>
+          <%#= related_record.send(fv.field.display_field.to_sym) %>
+          <%= related_record.full_name %>
+
+
+        <% when "select" %>
+          <%= fv.value %> <!-- Хранится как строка из options -->
+        <% end %>
+      </dd>
+    <% end %>
+  </dl>
+</div>
+
+<div class="mt-4">
+  <%= link_to "Назад к журналу", @entry.journal, class: "btn btn-secondary" %>
+</div>

@@ -41,6 +41,11 @@ ru:
   partners: Партнеры
   product_types: Тип продуктов
   order_logs: Сборки
+  errors:
+    zero: Нет ошибок
+    one: 1 ошибка
+    few: "%{count} ошибки"   # 2–4
+    many: "%{count} ошибок"  # 5+
   activerecord:
     attributes:
       user:
@@ -108,7 +113,18 @@ ru:
       order_log:
         name: Наименование
         new_order_log: Новая сборка
-
+      field:
+        field_type:
+          text: Текст
+          date: Дата
+          boolean: Флажок
+          time: Время
+          user_select: Выбор пользователя
+          car_select: Выбор автомобиля
+          select: Произвольный выбор
+      errors:
+        full_messages:
+          format: "%{attribute} %{message}"
   date:
     order: ["day", "month", "year"]
     month_names: [Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]

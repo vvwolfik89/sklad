@@ -1,0 +1,37 @@
+<%= form_with(model: [journal, field], local: true) do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Название поля" %>
+    <%= f.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :field_type, "Тип поля" %>
+    <%= f.select :field_type, Field.field_types.keys.map { |k| [k.humanize, k] },
+                 { include_blank: false },
+                 { class: "form-select",
+                   data: { controller: "field-type", action: "change->field-type#toggleSections" }
+                 } %>
+  </div>
+
+  <!-- Секция для полей-ссылок (user_select, car_select) -->
+  <div data-field-type-target="relatedSection" class="d-none mb-3">
+    <div>
+      <%= f.label :related_model, "Связанная модель" %>
+      <%= f.select :related_model, ['User', 'Car'], {}, class: "form-select" %>
+    </div>
+    <div>
+      <%= f.label :display_field, "Поле для отображения" %>
+      <%= f.text_field :display_field, class: "form-control", placeholder: "Например: full_name" %>
+    </div>
+  </div>
+
+  <!-- Секция для select-полей -->
+  <div data-field-type-target="optionsSection" class="d-none mb-3">
+    <div>
+      <%= f.label :options, "Варианты (через запятую)" %>
+      <%= f.text_area :options, class: "form-control", rows: 2 %>
+    </div>
+  </div>
+
+  <%= f.submit "Добавить поле", class: "btn btn-primary" %>
+<% end %>

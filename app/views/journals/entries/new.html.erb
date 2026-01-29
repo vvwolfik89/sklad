@@ -1,0 +1,22 @@
+<h1>Новая запись в журнал «<%= @journal.title %>»</h1>
+
+<%= render "/journals/entries/form" %>
+
+<%#= form_with(model: [@journal, @entry], local: true) do |f| %>
+<!--  <div class="mb-3">-->
+    <%#= f.label :date, "Дата записи" %>
+    <%#= f.date_field :date, class: "form-control", required: true, value: Date.today %>
+<!--  </div>-->
+
+<!--  Динамическое отображение полей журнала -->
+  <%# @journal.fields.each do |field| %>
+<!--    <div class="mb-4 p-3 bg-light border rounded">-->
+      <%#= render "/journals/entries/field_value_fields", field: field, f: f %>
+<!--    </div>-->
+  <%# end %>
+
+<!--  <div class="mt-4">-->
+    <%#= f.submit "Сохранить запись", class: "btn btn-success" %>
+    <%#= link_to "Отмена", @journal, class: "btn btn-secondary" %>
+<!--  </div>-->
+<%# end %>

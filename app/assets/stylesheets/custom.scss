@@ -142,3 +142,24 @@ td, th {
   overflow-y: auto;
   font-size: 0.85rem;
 }
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.border {
+  border: 1px solid #dee2e6 !important;
+}
+
+.rounded {
+  border-radius: 0.25rem !important;
+}
+
+// Дополнительные стили для форм
+.form-control, .form-select {
+  margin-bottom: 0.5rem;
+}
+
+.input-group {
+  margin-bottom: 0.5rem;
+}
