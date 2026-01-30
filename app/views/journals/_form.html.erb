@@ -31,7 +31,7 @@
   </h4>
 
 
-  <div data-controller="field-manager">
+  <div data-controller="field-manager" >
     <!-- Вложенные поля для fields -->
     <%= f.fields_for :fields do |field_form| %>
       <%= render "field_template", field_form: field_form, field:f %>

@@ -1,4 +1,4 @@
-  <div class="nested-field border rounded p-4 mb-3 bg-white shadow-sm">
+  <div data-controller="field-type" class="nested-field border rounded p-4 mb-3 bg-white shadow-sm">
     <!-- Скрытое поле ID (нужно для обновления существующих записей) -->
 
     <%= field_form.hidden_field :id %>
@@ -24,7 +24,7 @@
           <%= field_form.select :field_type, Field.field_types.keys.map { |k| [k.humanize, k] },
                                 { include_blank: false },
                                 { class: "form-select",
-                                  data: { controller: "field-type", action: "change->field-type#toggleSections" }
+                                  data: { action: "change->field-type#toggleSections" }
                                 } %>
         </div>
       </div>
@@ -34,11 +34,11 @@
       <div data-field-type-target="relatedSection" class="d-none mb-3">
         <div>
           <%= field_form.label :related_model, "Связанная модель" %>
-          <%= field_form.select :related_model, ['User', 'Car'], {}, class: "form-select" %>
+          <%= field_form.text_field :related_model, { class: "form-control", disabled: true , data: {field_type_target: "relatedModel" }} %>
         </div>
         <div>
           <%= field_form.label :display_field, "Поле для отображения" %>
-          <%= field_form.text_field :display_field, class: "form-control", placeholder: "Например: full_name" %>
+          <%= field_form.text_field :display_field,  { class: "form-control", placeholder: "Например: full_name", data: {field_type_target: "displayField" } }%>
         </div>
       </div>
 
