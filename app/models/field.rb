@@ -1,6 +1,6 @@
 class Field < ApplicationRecord
   belongs_to :journal
-  has_many :field_values, dependent: :delete_all
+  has_many :field_values, dependent: :destroy
 
   validates :name, presence: true
 
@@ -36,6 +36,6 @@ class Field < ApplicationRecord
 
   # Массив опций для select-поля
   def options_array
-    options || []
+    options.split(/\s*,\s*/).map(&:to_i) || []
   end
 end

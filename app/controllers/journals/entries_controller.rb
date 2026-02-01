@@ -23,18 +23,19 @@ class Journals::EntriesController < ApplicationController
   end
 
   def edit
-    @entry = Entry.find(params[:id])
-    # # Очищаем nil-элементы
-    # @journal.fields.reject(&:nil?)
-    # # Добавляем хотя бы один пустой объект для формы, если нужно
-    # @journal.fields.build unless @journal.fields.any?
   end
 
   def update
-    if @entry.update(entry_params)
-      redirect_to :journal_entry, notice: 'Запись успешно обновлёна.'
-    else
-      render :edit, status: :unprocessable_entity
+    respond_to do |format|
+      if @entry.update(entry_params)
+        format.html { redirect_to :journal_entry, notice: 'Запись успешно обновлена.' }
+        format.json { head :no_content }
+      else
+        # Перезагружаем @entry из БД, чтобы форма показывала актуальные данные
+        @entry.reload
+        format.html { render action: "edit" }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -60,7 +61,7 @@ class Journals::EntriesController < ApplicationController
     params.require(:entry).permit(
       :journal_id,
       :date,
-      field_values_attributes: [:field_id, :value, :related_record_id]
+      field_values_attributes: [:id, :field_id, :value, :related_record_id]
     )
   end
 end

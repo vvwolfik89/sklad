@@ -31,11 +31,23 @@ class JournalsController < ApplicationController
   end
 
   def update
-    if @journal.update(journal_params)
-      redirect_to @journal, notice: 'Журнал успешно обновлён.'
-    else
-      render :edit, status: :unprocessable_entity
+    # if @journal.update(journal_params)
+    #   redirect_to @journal, notice: 'Журнал успешно обновлён.'
+    # else
+    #   render :edit, status: :unprocessable_entity
+    # end
+
+
+    respond_to do |format|
+      if @journal.update(journal_params)
+        format.html { redirect_to @journal, notice: 'Permission was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @journal.errors, status: :unprocessable_entity }
+      end
     end
+
   end
 
   private

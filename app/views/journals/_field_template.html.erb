@@ -31,10 +31,10 @@
 
 
       <!-- Секция для полей-ссылок (user_select, car_select) -->
-      <div data-field-type-target="relatedSection" class="d-none mb-3">
+      <div data-field-type-target="relatedSection" class="d-nonett mb-3">
         <div>
           <%= field_form.label :related_model, "Связанная модель" %>
-          <%= field_form.text_field :related_model, { class: "form-control", disabled: true , data: {field_type_target: "relatedModel" }} %>
+          <%= field_form.text_field :related_model, { class: "form-control", readonly: true , data: {field_type_target: "relatedModel" }} %>
         </div>
         <div>
           <%= field_form.label :display_field, "Поле для отображения" %>
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Секция для select-полей -->
-      <div data-field-type-target="optionsSection" class="d-none mb-3">
+      <div data-field-type-target="optionsSection" class="d-nonett mb-3">
         <div>
           <%= field_form.label :options, "Варианты (через запятую)" %>
           <%= field_form.text_area :options, class: "form-control", rows: 2 %>

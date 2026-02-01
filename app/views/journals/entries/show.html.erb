@@ -23,7 +23,7 @@
         <% when /_select$/ %>
           <% related_record = fv.field.related_model.constantize.find(fv.related_record_id) %>
           <%#= related_record.send(fv.field.display_field.to_sym) %>
-          <%= related_record.full_name %>
+          <%= related_record.send(fv.field.display_field) %>
 
 
         <% when "select" %>

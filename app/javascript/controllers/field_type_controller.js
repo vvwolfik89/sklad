@@ -40,11 +40,9 @@ export default class extends Controller {
 // Метод для очистки полей
     clearRelatedFields() {
         if (this.hasRelatedModelTarget) {
-            debugger
             this.relatedModelTargets.forEach(input => input.value = "");
         }
         if (this.hasDisplayFieldTarget) {
-            debugger
             this.displayFieldTargets.forEach(input => input.value = "");
         }
         if (this.hasOptionsTarget) {

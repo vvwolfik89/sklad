@@ -11,8 +11,6 @@
   <%= f.fields_for :field_values do |fv_form| %>
     <% field = fv_form.object.field %>
 
-
-
     <div class="mb-4">
       <h5><%= field.name %></h5>
       <p class="text-muted small"><%= field.field_type.humanize %></p>
@@ -35,20 +33,47 @@
       <% when "user_select", "car_select" %>
         <%= fv_form.select :related_record_id,
                            options_from_collection_for_select(
-                             field.related_model.safe_constantize.all,
+                             begin
+                               model = field.related_model.presence&.safe_constantize
+                               model&.limit(100).order(:id)
+                             rescue => e
+                               []
+                             end,
                              :id,
-                             # Динамический выбор поля для отображения
-                             (field.display_field.presence ||
-                               (field.related_model == "User" ? :full_name : :name))
+                             begin
+                               field.display_field.presence.to_sym ||
+                                 (model == User ? :full_name : :name)
+                             rescue
+                               :name
+                             end,
+                             # Явно указываем выбранное значение
+                             fv_form.object.related_record_id
                            ),
                            { include_blank: true },
                            {
                              class: "form-select #{'is-invalid' if fv_form.object.errors.include?(:value)}",
                              aria: { label: field.name, invalid: fv_form.object.errors.include?(:value) },
-                             id: "field_value_#{field.id}_select"
-                           } %>
+                             id: "field_value_#{field.id}_select",
+                             data: {
+                               placeholder: field.display_field.presence || "Выберите запись"
+                             }
+                           }
+        %>
 
 
+    <% when "dropdown" %>
+        <% options = field.options_array %>
+        <% if options.empty? %>
+          <p class="text-muted"><%= t('forms.select.no_options') %></p>
+        <% else %>
+          <%= select_tag "field_values][#{field.id}][value",
+                         options_for_select(options, f.object.try(:value)),
+                         { include_blank: true,
+                           class: "form-select #{'is-invalid' if f.object.errors.include?(:value)}",
+                           aria: { label: field.name, invalid: f.object.errors.include?(:value) },
+                           id: "field_value_#{field.id}_select"} %>
+          <!--                       required: field.required? -->
+        <% end %>
 
     <% when "boolean" %>
         <div class="form-check">

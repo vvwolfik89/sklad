@@ -34,6 +34,19 @@
   <div data-controller="field-manager" >
     <!-- Вложенные поля для fields -->
     <%= f.fields_for :fields do |field_form| %>
+      <!-- Ошибки конкретной вложенной записи -->
+      <%# if field_form.object.errors.any? %>
+<!--        <div class="alert alert-warning">-->
+<!--          <strong>Ошибки для <%#= field_form.object.name || 'записи' %>:</strong>-->
+<!--          <ul>-->
+            <%# field_form.object.errors.full_messages.each do |msg| %>
+<!--              <li><%#= msg %></li>-->
+            <%# end %>
+<!--          </ul>-->
+<!--        </div>-->
+      <%# end %>
+
+
       <%= render "field_template", field_form: field_form, field:f %>
     <% end %> <!-- /fields_for -->
 

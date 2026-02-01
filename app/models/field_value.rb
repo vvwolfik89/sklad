@@ -1,6 +1,6 @@
 class FieldValue < ApplicationRecord
   belongs_to :entry
-  belongs_to :field, dependent: :destroy
+  belongs_to :field
 
   # Для текстовых/числовых полей
   attribute :value, :text
