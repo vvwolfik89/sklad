@@ -1,0 +1,69 @@
+<h1><%= @journal.title %></h1>
+<p><%= @journal.description %></p>
+
+<div class="mb-3">
+  <%= link_to "Добавить запись", new_journal_entry_path(@journal), class: "btn btn-success" %>
+  <%= link_to "Назад к списку", journals_path, class: "btn btn-secondary" %>
+</div>
+<%= render 'shared/versions_modal' %>
+<h3>Записи</h3>
+<% if @entries.any? %>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Дата</th>
+        <% @journal.fields.each do |field| %>
+          <th><%=field.name%></th>
+        <% end %>
+      <th>Автор</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @entries.each do |entry| %>
+      <tr>
+        <td><%= entry.date %></td>
+        <% entry.field_values.each do |fv| %>
+<!--          <dt class="col-sm-3"><%#= fv.field.name %></dt>-->
+          <td>
+            <% case fv.field.field_type %>
+            <% when "text" %>
+              <%= fv.value %>
+
+            <% when "date" %>
+              <%= Date.parse(fv.value) if fv.value.present? %>
+
+
+            <% when "boolean" %>
+              <%= fv.value == "true" ? "Да" : "Нет" %>
+
+
+            <% when /_select$/ %>
+              <% related_record = fv.field.related_model.constantize.find(fv.related_record_id) %>
+              <%#= related_record.send(fv.field.display_field.to_sym) %>
+              <%= related_record.send(fv.field.display_field) %>
+
+
+            <% when "select" %>
+              <%= fv.value %> <!-- Хранится как строка из options -->
+            <% end %>
+          </td>
+        <% end %>
+        <td><%= entry.creator.full_name %></td>
+        <td>
+          <%= link_to "Посмотреть", journal_entry_path(entry.journal, entry), class: "btn btn-sm btn-primary" if can?(:show, :journal_entry) %>
+          <%= link_to "Исправить", edit_journal_entry_path(@journal, entry), class: "btn btn-sm btn-secondary" if can?(:edit, :journal_entry)  %>
+          <%= link_to "Удалить", journal_entry_path(@journal, entry), data: { turbo_method: :delete, turbo_confirm: "Удалить сборку?" }, class: "btn btn-sm btn-danger" if can?(:destroy, :journal_entry) %>
+          <%= link_to("История изменений", nil, data: { bs_target: "#versionModal",
+                                                        action: "click->version-modal#show",
+                                                        version_modal_url: "#{version_history_journal_entry_path(entry.journal, entry) }",
+                                                        bs_toggle: "modal"
+          }, class: "btn btn-info btn-block pv10 fw600 mb10") %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Нет записей. <%= link_to "Добавить первую", new_journal_entry_path(@journal) %>.</p>
+<% end %>

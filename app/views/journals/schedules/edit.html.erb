@@ -1,0 +1,56 @@
+<h1>Расписание для журнала «<%= @schedule.journal.title %>»</h1>
+
+
+<%= form_with(model: [@journal, @schedule], local: true) do |f| %>
+  <div class="mb-3">
+    <label class="form-label">Дни недели</label>
+    <% (0..6).each do |day| %>
+      <div class="form-check form-check-inline">
+        <%= check_box_tag "schedule[days][]", day, @schedule.days_array.include?(day),
+                          { class: "form-check-input", id: "day_#{day}" } %>
+        <%= label_tag "day_#{day}", Date::DAYNAMES[day], class: "form-check-label" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Время записей</label>
+    <div id="times-container">
+      <% @schedule.times_array.each do |time| %>
+        <div class="input-group mb-2">
+          <%= text_field_tag "schedule[times][]", time, class: "form-control time-input" %>
+          <button type="button" class="btn btn-outline-danger remove-time">×</button>
+        </div>
+      <% end %>
+    </div>
+    <button type="button" id="add-time" class="btn btn-sm btn-outline-primary">Добавить время</button>
+  </div>
+
+  <%= f.submit "Сохранить расписание", class: "btn btn-primary" %>
+  <%= link_to "Отмена", @journal, class: "btn btn-secondary" %>
+<% end %>
+
+<!-- JavaScript для динамического добавления/удаления времени -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('times-container');
+        const addButton = document.getElementById('add-time');
+
+
+        addButton.addEventListener('click', function() {
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2';
+            div.innerHTML = `
+        <input type="text" name="schedule[times][]" class="form-control time-input" placeholder="ЧЧ:ММ">
+        <button type="button" class="btn btn-outline-danger remove-time">×</button>
+      `;
+            container.appendChild(div);
+        });
+
+        container.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-time')) {
+                e.target.closest('.input-group').remove();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,83 @@
+<%= form_with(model: @journal, local: true) do |f| %>
+  <!-- Блок отображения ошибок (если есть) -->
+  <% if @journal.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4><%= @journal.errors.count %> prohibited this journal from being saved:</h4>
+      <ul>
+        <% @journal.errors.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Основные поля журнала -->
+  <div class="field mb-3">
+    <%= f.label :title, class: "form-label" %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Введите название журнала" %>
+  </div>
+
+  <div class="field mb-3">
+    <%= f.label :description, class: "form-label" %>
+    <%= f.text_area :description, class: "form-control", rows: 4, placeholder: "Описание журнала" %>
+  </div>
+
+  <hr class="my-4">
+
+  <!-- Заголовок раздела полей -->
+  <h4 class="mb-3">
+    Поля журнала
+    <small class="text-muted">(настройте структуру записей)</small>
+  </h4>
+
+
+  <div data-controller="field-manager" >
+    <!-- Вложенные поля для fields -->
+    <%= f.fields_for :fields do |field_form| %>
+      <!-- Ошибки конкретной вложенной записи -->
+      <%# if field_form.object.errors.any? %>
+<!--        <div class="alert alert-warning">-->
+<!--          <strong>Ошибки для <%#= field_form.object.name || 'записи' %>:</strong>-->
+<!--          <ul>-->
+            <%# field_form.object.errors.full_messages.each do |msg| %>
+<!--              <li><%#= msg %></li>-->
+            <%# end %>
+<!--          </ul>-->
+<!--        </div>-->
+      <%# end %>
+
+
+      <%= render "field_template", field_form: field_form, field:f %>
+    <% end %> <!-- /fields_for -->
+
+
+    <!-- Контейнер для динамически добавляемых полей -->
+    <div id="new-fields-container"></div>
+    <!--            class="btn btn-secondary mt-2"-->
+    <!--            onclick="addNewField()"-->
+
+
+    <!-- Кнопка добавления нового поля -->
+    <button type="button"
+            data-action="click->field-manager#addField"
+            class="btn btn-outline-primary btn-sm mb-4">
+      <i class="bi bi-plus"></i> Добавить поле
+    </button>
+
+
+    <template data-order-log-form-target="orderDetailTemplate">
+      <%= f.fields_for :fields, Field.new, child_index: "NEW_FIELD" do |ff| %>
+        <%= render "field_template", field_form: ff %>
+      <% end %>
+    </template>
+
+  </div>
+
+  <!-- Кнопки управления формой -->
+  <div class="d-flex gap-2">
+    <%= f.submit "Сохранить журнал", class: "btn btn-primary" %>
+    <%= link_to "Отмена", journals_path, class: "btn btn-secondary" %>
+  </div>
+<% end %> <!-- /form_with -->
+
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_11_203830) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_25_204934) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -75,6 +75,52 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_11_203830) do
     t.bigint "user_id", null: false
     t.index ["department_id"], name: "index_departments_users_on_department_id"
     t.index ["user_id"], name: "index_departments_users_on_user_id"
+  end
+
+  create_table "entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "journal_id", null: false
+    t.bigint "creator_id", null: false
+    t.date "date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_entries_on_creator_id"
+    t.index ["journal_id", "date"], name: "index_entries_on_journal_id_and_date"
+    t.index ["journal_id"], name: "index_entries_on_journal_id"
+  end
+
+  create_table "field_values", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "entry_id", null: false
+    t.bigint "field_id", null: false
+    t.text "value"
+    t.integer "related_record_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_id", "field_id"], name: "index_field_values_on_entry_id_and_field_id"
+    t.index ["entry_id"], name: "index_field_values_on_entry_id"
+    t.index ["field_id"], name: "index_field_values_on_field_id"
+    t.index ["related_record_id"], name: "index_field_values_on_related_record_id"
+  end
+
+  create_table "fields", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "journal_id", null: false
+    t.string "name", null: false
+    t.string "field_type", null: false
+    t.string "related_model"
+    t.string "display_field"
+    t.json "options"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "required"
+    t.text "placeholder"
+    t.index ["journal_id"], name: "index_fields_on_journal_id"
+  end
+
+  create_table "journals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_journals_on_title", unique: true
   end
 
   create_table "order_details", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -172,6 +218,15 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_11_203830) do
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
+  create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "journal_id", null: false
+    t.json "times"
+    t.json "days"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["journal_id"], name: "index_schedules_on_journal_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -202,5 +257,11 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_11_203830) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "entries", "journals"
+  add_foreign_key "entries", "users", column: "creator_id"
+  add_foreign_key "field_values", "entries"
+  add_foreign_key "field_values", "fields"
+  add_foreign_key "fields", "journals"
   add_foreign_key "orders", "order_details"
+  add_foreign_key "schedules", "journals"
 end

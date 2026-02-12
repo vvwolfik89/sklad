@@ -1,0 +1,102 @@
+<%= form_with(model: [@journal, @entry], local: true) do |f| %>
+  <%# Скрытое поле для journal_id %>
+    <div class="mb-3">
+      <%= f.label :date, "Дата записи" %>
+      <%= f.date_field :date, class: "form-control", required: true, value: Date.today %>
+    </div>
+
+  <%= f.hidden_field :journal_id, value: @journal.id %>
+
+  <%# Вложенные поля для field_values %>
+  <%= f.fields_for :field_values do |fv_form| %>
+    <% field = fv_form.object.field %>
+
+    <div class="mb-4">
+      <h5><%= field.name %></h5>
+      <p class="text-muted small"><%= field.field_type.humanize %></p>
+
+      <%# Динамически выбираем тип поля %>
+      <% case field.field_type %>
+      <% when "text" %>
+        <%= fv_form.text_field :value,
+                               class: "form-control #{'is-invalid' if fv_form.object.errors.include?(:value)}",
+                               # placeholder: field.placeholder || t('forms.placeholders.text'),
+                               aria: { label: field.name, invalid: fv_form.object.errors.include?(:value) },
+                               id: "field_value_#{field.id}_text" %>
+
+      <% when "date" %>
+        <%= fv_form.date_field :value,
+                               class: "form-control #{'is-invalid' if fv_form.object.errors.include?(:value)}",
+                               aria: { label: field.name, invalid: fv_form.object.errors.include?(:value) },
+                               id: "field_value_#{field.id}_date" %>
+
+      <% when "user_select", "car_select" %>
+        <%= fv_form.select :related_record_id,
+                           options_from_collection_for_select(
+                             begin
+                               model = field.related_model.presence&.safe_constantize
+                               model&.limit(100).order(:id)
+                             rescue => e
+                               []
+                             end,
+                             :id,
+                             begin
+                               field.display_field.presence.to_sym ||
+                                 (model == User ? :full_name : :name)
+                             rescue
+                               :name
+                             end,
+                             # Явно указываем выбранное значение
+                             fv_form.object.related_record_id
+                           ),
+                           { include_blank: true },
+                           {
+                             class: "form-select #{'is-invalid' if fv_form.object.errors.include?(:value)}",
+                             aria: { label: field.name, invalid: fv_form.object.errors.include?(:value) },
+                             id: "field_value_#{field.id}_select",
+                             data: {
+                               placeholder: field.display_field.presence || "Выберите запись"
+                             }
+                           }
+        %>
+
+
+    <% when "dropdown" %>
+        <% options = field.options_array %>
+        <% if options.empty? %>
+          <p class="text-muted"><%= t('forms.select.no_options') %></p>
+        <% else %>
+          <%= select_tag "field_values][#{field.id}][value",
+                         options_for_select(options, f.object.try(:value)),
+                         { include_blank: true,
+                           class: "form-select #{'is-invalid' if f.object.errors.include?(:value)}",
+                           aria: { label: field.name, invalid: f.object.errors.include?(:value) },
+                           id: "field_value_#{field.id}_select"} %>
+          <!--                       required: field.required? -->
+        <% end %>
+
+    <% when "boolean" %>
+        <div class="form-check">
+          <%= fv_form.check_box :value,
+                                class: "form-check-input #{'is-invalid' if fv_form.object.errors.include?(:value)}",
+                                id: "field_value_#{field.id}_checkbox" %>
+          <%= fv_form.label :value, t('forms.labels.yes_no'), class: "form-check-label" %>
+        </div>
+
+        <%# Другие типы (user_select, select и т.п.) %>
+      <% end %>
+
+      <%= fv_form.hidden_field :field_id, value: field.id %>
+      <%= fv_form.hidden_field :field_type, value: field.field_type %>
+
+      <%# Сообщение об ошибке %>
+      <% if fv_form.object.errors.include?(:value) %>
+        <div class="invalid-feedback">
+          <%= fv_form.object.errors[:value].first %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= f.submit 'Save', class: "btn btn-primary" %>
+<% end %>

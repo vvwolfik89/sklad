@@ -30,6 +30,8 @@
 
 <body>
 <% if current_user %>
+  <%#= render "shared/flash" %>
+  <%#= render "shared/navbar" %>
   <div class="position-relative bg-white d-flex p-0">
     <%= render 'shared/menu' %>
     <div class="content p-4">

@@ -1,0 +1,99 @@
+<%= tag.div class: "mb-4 p-3 bg-light border rounded", data: { field_id: field.id } do %>
+  <h5 class="mb-1"><%= field.name %></h5>
+  <p class="text-muted small"><%= field.field_type.humanize %></p>
+
+  <%#= f.text_field "field_values][#{field.id}][field_id", value: field.id %>
+
+  <%= text_field_tag "field_values[#{field.id}][field_id]",
+                    field.id
+                     # f.object.field_values[field.id]&.value,
+                     # class: "form-control #{'is-invalid' if f.object.errors.include?(:value)}",
+                     # required: field.required?,
+                     # placeholder: field.placeholder || t('forms.placeholders.text'),
+                     # aria: { label: field.name, invalid: f.object.errors.include?(:value) },
+                     # id: "field_value_#{field.id}_text"
+  %>
+
+
+
+  <% case field.field_type %>
+<% when "text" %>
+    <%= f.text_field "field_values][#{field.id}][value",
+                     class: "form-control #{'is-invalid' if f.object.errors.include?(:value)}",
+                     # required: field.required?,
+                     # placeholder: field.placeholder || t('forms.placeholders.text'),
+                     aria: { label: field.name, invalid: f.object.errors.include?(:value) },
+                     id: "field_value_#{field.id}_text" %>
+
+
+  <% when "date" %>
+    <%= f.date_field "field_values][#{field.id}][value",
+                     class: "form-control #{'is-invalid' if f.object.errors.include?(:value)}",
+                     # required: field.required?,
+                     aria: { label: field.name, invalid: f.object.errors.include?(:value) },
+                     id: "field_value_#{field.id}_date" %>
+
+  <% when "boolean" %>
+    <div class="form-check">
+      <%= f.check_box "field_values][#{field.id}][value",
+                      class: "form-check-input #{'is-invalid' if f.object.errors.include?(:value)}",
+                      id: "field_value_#{field.id}_checkbox",
+                      aria: { invalid: f.object.errors.include?(:value) } %>
+      <%= f.label "field_values][#{field.id}][value",
+                  t('forms.labels.yes_no'),
+                  class: "form-check-label",
+                  for: "field_value_#{field.id}_checkbox" %>
+    </div>
+
+  <% when "user_select", "car_select" %>
+    <% model_name = field.related_model %>
+    <% if model_name.present? && model_name.safe_constantize.present? %>
+      <% model_class = model_name.safe_constantize %>
+      <% related_records = model_class.all %>
+
+      <% if related_records.empty? %>
+        <p class="text-muted"><%= t('forms.select.no_records') %></p>
+      <% else %>
+        <% display_field = field.display_field.presence || :full_name %>
+        <% display_method = display_field.to_sym %>
+
+
+        <% if related_records.first.respond_to?(display_method) %>
+          <%= collection_select "field_values[#{field.id}]", :related_record_id,
+                                related_records,
+                                :id,
+                                display_method,
+                                { include_blank: true },
+                                { class: "form-select #{'is-invalid' if f.object.errors.include?(:related_record_id)}",
+                                  aria: { label: field.name, invalid: f.object.errors.include?(:related_record_id) },
+                                  id: "field_value_#{field.id}_select" } %>
+        <% else %>
+          <p class="text-muted">
+            Поле для отображения «<%= display_field %>» не найдено в модели <%= model_name %>
+          </p>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p class="text-muted">Модель «<%= model_name %>» не найдена или некорректна</p>
+    <% end %>
+
+  <% when "select" %>
+    <% options = field.options_array %>
+    <% if options.empty? %>
+      <p class="text-muted"><%= t('forms.select.no_options') %></p>
+    <% else %>
+      <%= select_tag "field_values][#{field.id}][value",
+                     options_for_select(options, f.object.try(:value)),
+                     { include_blank: true,
+                       class: "form-select #{'is-invalid' if f.object.errors.include?(:value)}",
+                       aria: { label: field.name, invalid: f.object.errors.include?(:value) },
+                       id: "field_value_#{field.id}_select"} %>
+<!--                       required: field.required? -->
+    <% end %>
+
+  <% else %>
+    <p class="text-warning">
+      <%= t('forms.errors.unsupported_type', type: field.field_type) %>
+    </p>
+  <% end %>
+<% end %>
