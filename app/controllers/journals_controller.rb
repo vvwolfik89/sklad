@@ -10,11 +10,6 @@ class JournalsController < ApplicationController
   end
 
   def edit
-    @journal = Journal.find(params[:id])
-    # Очищаем nil-элементы
-    @journal.fields.reject(&:nil?)
-    # Добавляем хотя бы один пустой объект для формы, если нужно
-    @journal.fields.build unless @journal.fields.any?
   end
 
   def new
@@ -31,13 +26,6 @@ class JournalsController < ApplicationController
   end
 
   def update
-    # if @journal.update(journal_params)
-    #   redirect_to @journal, notice: 'Журнал успешно обновлён.'
-    # else
-    #   render :edit, status: :unprocessable_entity
-    # end
-
-
     respond_to do |format|
       if @journal.update(journal_params)
         format.html { redirect_to @journal, notice: 'Permission was successfully updated.' }
@@ -47,7 +35,21 @@ class JournalsController < ApplicationController
         format.json { render json: @journal.errors, status: :unprocessable_entity }
       end
     end
+  end
 
+  def version_history
+    @journal = Journal.find(params[:id])
+        # Собираем версии с информацией о пользователе
+    versions = @journal.related_versions.map do |version|
+      {
+        event: version.event,
+        changed_at: version.created_at.strftime("%d.%m.%Y %H:%M"),
+        changed_by: version.whodunnit ? User.find_by(id: version.whodunnit)&.full_name : "Неизвестно",
+        changes: version.changeset
+      }
+    end
+
+    render json: versions
   end
 
   private

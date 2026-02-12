@@ -1,4 +1,8 @@
 class FieldValue < ApplicationRecord
+  include TrackableLastChanger
+
+  has_paper_trail ignore: [:updated_at]
+
   belongs_to :entry
   belongs_to :field
 

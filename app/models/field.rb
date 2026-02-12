@@ -1,4 +1,6 @@
 class Field < ApplicationRecord
+  has_paper_trail ignore: [:updated_at]
+
   belongs_to :journal
   has_many :field_values, dependent: :destroy
 

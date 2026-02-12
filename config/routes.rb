@@ -22,8 +22,15 @@ Rails.application.routes.draw do
   end
   resources :journals do
     resources :fields, only: [:create, :update, :destroy], module: :journals
-    resources :entries, module: :journals  # ← эта строка
+    resources :entries, module: :journals  do
+      member do
+        get :version_history  # ← внутри блока resources!
+      end
+    end# ← эта строка
     resource :schedule, only: [:edit, :update], module: :journals
+    member do
+      get :version_history  # ← внутри блока resources!
+    end
   end
 
   # Дополнительные маршруты для удобства

@@ -5,7 +5,7 @@
   <%= link_to "Добавить запись", new_journal_entry_path(@journal), class: "btn btn-success" %>
   <%= link_to "Назад к списку", journals_path, class: "btn btn-secondary" %>
 </div>
-
+<%= render 'shared/versions_modal' %>
 <h3>Записи</h3>
 <% if @entries.any? %>
   <table class="table table-hover">
@@ -54,6 +54,11 @@
           <%= link_to "Посмотреть", journal_entry_path(entry.journal, entry), class: "btn btn-sm btn-primary" if can?(:show, :journal_entry) %>
           <%= link_to "Исправить", edit_journal_entry_path(@journal, entry), class: "btn btn-sm btn-secondary" if can?(:edit, :journal_entry)  %>
           <%= link_to "Удалить", journal_entry_path(@journal, entry), data: { turbo_method: :delete, turbo_confirm: "Удалить сборку?" }, class: "btn btn-sm btn-danger" if can?(:destroy, :journal_entry) %>
+          <%= link_to("История изменений", nil, data: { bs_target: "#versionModal",
+                                                        action: "click->version-modal#show",
+                                                        version_modal_url: "#{version_history_journal_entry_path(entry.journal, entry) }",
+                                                        bs_toggle: "modal"
+          }, class: "btn btn-info btn-block pv10 fw600 mb10") %>
         </td>
       </tr>
     <% end %>

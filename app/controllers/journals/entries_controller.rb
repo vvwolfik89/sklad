@@ -51,6 +51,21 @@ class Journals::EntriesController < ApplicationController
     end
   end
 
+  def version_history
+    # Собираем версии с информацией о пользователе
+    versions = @entry.related_versions.map do |version|
+      {
+        event: version.event,
+        changed_at: version.created_at.strftime("%d.%m.%Y %H:%M"),
+        changed_by: version.whodunnit ? User.find_by(id: version.whodunnit)&.full_name : "Неизвестно",
+        changes: version.changeset
+      }
+    end
+
+    render json: versions
+  end
+
+
   private
 
   def set_journal
