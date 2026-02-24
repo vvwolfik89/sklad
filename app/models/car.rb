@@ -1,6 +1,6 @@
 class Car < ApplicationRecord
 
-  enum fuel_type: [:diesel, :gas]
+  enum fuel_type: { diesel: 0, gas: 1 }
 
   has_many :registers_car_inspections, class_name: 'Registers::CarRegister', foreign_key: :car_id, through: 'cars_registers'
 

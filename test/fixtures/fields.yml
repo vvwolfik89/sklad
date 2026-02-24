@@ -4,8 +4,24 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
+one:
+  journal_id: 1
+  name: "Выс3"
+  field_type: "text"
+  related_model: ""
+  display_field: ""
+  options: ""
+  required: false
+  placeholder: ""
+    # column: value
 #
-two: {}
+two:
+  journal_id: 2
+  name: "Выс23"
+  field_type: "text"
+  related_model: ""
+  display_field: ""
+  options: ""
+  required: false
+  placeholder: ""
 # column: value
