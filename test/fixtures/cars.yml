@@ -6,9 +6,9 @@ one:
   brand: MyString
   date_registration: 2023-05-12
   date_of_manufacture: 2023-05-12
-  fuel_type: 1
-  vin: MyString
-  vin_equipment: MyString
+  fuel_type: diesel
+  vin: VIN12345678901
+  vin_equipment: EQUIP1231
   date_to: 2023-05-12
   date_safety: 2023-05-12
 
@@ -18,8 +18,8 @@ two:
   brand: MyString
   date_registration: 2023-05-12
   date_of_manufacture: 2023-05-12
-  fuel_type: 1
-  vin: MyString
-  vin_equipment: MyString
+  fuel_type: diesel
+  vin: VIN123456789102
+  vin_equipment: EQUIP1232
   date_to: 2023-05-12
   date_safety: 2023-05-12
